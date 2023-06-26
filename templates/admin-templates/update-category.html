@@ -1,0 +1,71 @@
+{% extends 'admin-templates/base.html' %}
+
+{% block content %}
+<div class="content-main" style="background-color: #f2f2f2; padding: 20px;" >
+    <div class="row">
+        <div class="col-6">
+            <div class="content-header">
+                <h6 class="content-title">Basic Form</h6>
+                <form enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        
+                        {{form.name}}
+                        {% if form.errors.name%}
+                        <label  class="text-danger">{{form.errors.name}}</label>
+                        {% endif %}
+                        
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Offer</label>
+                        
+                        {{form.offer}}
+                        {% if form.errors.offer %}
+                        <label  class="text-danger">{{form.errors.offer}}</label>
+                        {% endif %}
+                        
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Default file input example</label>
+                        {{form.image}}
+                        {% if form.errors.image%}
+                        <label  class="text-danger">{{form.errors.image}}</label>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <div class="form-floating">
+                        
+                        {{form.description}}
+                        {% if form.errors.description%}
+                        <label  class="text-danger">{{form.errors.description}}</label>
+                        {% endif %}
+                        </div>   
+                    </div>
+                   
+                    <div class="form-check">
+                        {{form.status}}
+                        
+                        <label class="form-check-label" for="status">
+                            Stauts
+                        </label>
+                        {% if form.errors.status%}
+                        <label  class="text-danger">{{form.errors.status}}</label>
+                        {% endif %}
+                    </div>
+                   
+                    
+                    <button type="submit" class="btn btn-primary">Add Category</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

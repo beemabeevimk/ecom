@@ -1,0 +1,47 @@
+{% extends 'admin-templates/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content-main" style="background-color: #f2f2f2; padding: 20px;">
+    <div class="row ">
+        <div class="col-6">
+    <div class="content-header ">
+        <h6 class="content-title">Responsive Table</h6>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Brand Name</th>
+                        <th scope="col">Brand Model</th>
+                        <th scope="col">Brand Description</th>
+                        <th scope="col">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in categories %}
+                    <tr>
+                        <th scope="row">{{product.id}}</th>
+                        <td>{{product.name}}</td>
+                        <td>{{product.model}}</td>
+                        {% comment %} <td>{{product.image}}</td> {% endcomment %}
+                        <td>{{product.description}}</td>
+                        
+                        <td><a href=" {% url  'update_brand' product.id  %}" class="btn btn-light">Update</a></td>
+                        <td><a href="{% url 'delete_brand' product.id %}" class="btn btn-danger">Delete</a></td>
+                        
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+    <a href="add_brand" class="btn btn-primary">Add Brand</a>
+    </div>
+    </div>
+    
+    </div>
+
+{% endblock %}

@@ -1,0 +1,178 @@
+
+
+{% extends 'user/base.html' %}
+{% load static %}
+{% block content%}
+        <main class="main">
+
+            <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url({% static 'images/backgrounds/login.jpg' %})">
+            	<div class="container">
+            		<div class="form-box">
+            			<div class="form-tab">
+	            			<ul class="nav nav-pills nav-fill" role="tablist">
+							    <li class="nav-item">
+							        <a class="nav-link active" id="register-tab-2" data-toggle="tab" href="#register-2" role="tab" aria-controls="register-2" aria-selected="true">Register</a>
+							    </li>
+							</ul>
+							<div class="tab-content">
+							    <div class="tab-pane fade show active" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
+							    	<form action="/signup" method="post" onsubmit="return validate()">
+                                        {% csrf_token %}
+							    		<div class="form-group">
+							    			<label for="password">New Password <span style="color: red;">*</span></label>
+							    			<input type="password" class="form-control" id="password" name="password" required>
+                                            <label style="display: none;" id="password-error"></label>
+							    		</div><!-- End .form-group -->
+                                        <div class="form-group">
+							    			<label for="confirm-password">Confirm Password <span style="color: red;">*</span></label>
+							    			<input type="password" class="form-control" id="confirm-password" name="confirmpassword" required>
+                                            <label style="display: none;" id="confirm-password-error"></label>
+							    		</div><!-- End .form-group -->
+
+
+							    		<div class="form-footer">
+							    			<button type="submit" class="btn btn-outline-primary-2">
+			                					<span>LOGIN</span>
+			            						<i class="icon-long-arrow-right"></i>
+			                				</button>
+                                            {% comment %} Already Have Account? &nbsp;
+                                            <a href="/user_login" class="signin-link">SignIn</a> {% endcomment %}
+
+			                				<!-- <div class="custom-control custom-checkbox">
+												<input type="checkbox" class="custom-control-input" id="register-policy-2" required>
+												<label class="custom-control-label" for="register-policy-2">I agree to the <a href="#">privacy policy</a> *</label>
+											</div>End .custom-checkbox -->
+							    		</div><!-- End .form-footer -->
+							    	</form>
+							    	
+							    </div><!-- .End .tab-pane -->
+							</div><!-- End .tab-content -->
+						</div><!-- End .form-tab -->
+            		</div><!-- End .form-box -->
+            	</div><!-- End .container -->
+            </div><!-- End .login-page section-bg -->
+        </main><!-- End .main -->
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+        {% comment %} <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script> {% endcomment %}
+        
+        
+            {% comment %} <script>
+              Swal.fire({
+                icon: 'error',
+                title: '<%=notice%>',
+                showConfirmButton: false,
+                timer: 2000
+              });
+            </script> {% endcomment %}
+           
+
+
+        
+
+
+        <script>
+            function checkPassword() {
+                let password = document.getElementById("password").value;
+                let confirmPassword = document.getElementById("confirm-password").value;
+                console.log("Password:", password, "\n", "Confirm Password:", confirmPassword);
+                let message = document.getElementById("confirm-password-error");
+        
+                if (password.length !== 0) {
+                    if (password === confirmPassword) {
+                        return true; // Allow form submission
+                    } else {
+                        message.style.display = ''
+                        message.textContent = "Passwords don't match";
+                        message.style.color = "#ff4d4d";
+                        return false; // Prevent form submission
+                    }
+                } else {
+                    message.textContent = "Password can't be empty!";
+                    message.style.color = "#ff4d4d";
+                    return false; // Prevent form submission
+                }
+            }
+            function validate() {
+                var name = document.getElementById("fname").value.trim();
+                var email = document.getElementById("email").value;
+                var phone = document.getElementById("phone-number").value;
+                var password = document.getElementById("password").value;
+                var confirmPassword = document.getElementById("confirm-password").value;
+                var nameFormat = /^[a-zA-Z ]+$/;
+                var emailFormat = /^\S+@\S+\.\S+$/;
+                var phoneFormat = /^\d{10}$/;
+                let nameError = document.getElementById("fname-error");
+                let emailError = document.getElementById("email-error");
+                let phoneError = document.getElementById("phone-number-error");
+                let passwordError = document.getElementById("password-error");
+        
+                if (!name.match(nameFormat)) {
+                    nameError.style.display = ''
+                    nameError.textContent = "Enter Correct Name!";
+                    nameError.style.color = "#ff4d4d";
+                    return false;
+                } else nameError.style.display = 'none'
+        
+                if (!email.match(emailFormat)) {
+                    emailError.style.display = ''
+                    emailError.textContent = "Invalid Email Address!";
+                    emailError.style.color = "#ff4d4d";
+                    return false;
+                } else emailError.style.display = 'none'
+        
+                if (!phone.match(phoneFormat)) {
+                    phoneError.style.display = ''
+                    phoneError.textContent = "Enter Valid Phone Number!";
+                    phoneError.style.color = "#ff4d4d";
+                    return false;
+                } else phoneError.style.display = 'none'
+        
+                if (password.length < 6) {
+                    passwordError.style.display = ''
+                    passwordError.textContent = "Password should be at least 6 characters!";
+                    passwordError.style.color = "#ff4d4d";
+                    return false;
+                } else passwordError.style.display = 'none'
+        
+                // if (password !== confirmPassword) {
+                //     window.alert("Passwords don't match.");
+                //     document.getElementById("confirm-password-2").focus();
+                //     return false;
+                // }
+
+                return checkPassword();
+        
+                return true;
+            }
+
+        </script>
+
+
+
+
+
+
+    <script>
+        function validate() {
+            var fullname = document.getElementById("fullname").value.trim();
+            var email = document.getElementById("email").value;
+            var phone = document.getElementById("phone").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm-password").value;
+
+            // Add your validation logic here
+
+            return true; // Return true to allow form submission
+        }
+    </script>
+</body>
+</html>
+
+{% endblock content%}
+
+
+
+

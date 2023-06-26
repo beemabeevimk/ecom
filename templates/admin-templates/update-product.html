@@ -1,0 +1,136 @@
+{% extends 'admin-templates/base.html' %}
+{% load static %}
+{% block content %}
+<div class="content-main" style="background-color: #f2f2f2; padding: 20px;"  >
+    <div class="row">
+        <div class="col-6 ">
+            <div class="content-header">
+                <h6 class="content-title">Basic Form</h6>
+                <form enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label  class="form-label">Category</label>
+                        
+                        {{form.category}}
+                        {% if form.error.category%}
+                        <label  class="text-danger">{{forms.errors.category}}</label>
+                        {% endif %}
+
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Brand</label>
+                        
+                        {{form.brand}}
+                        {% if form.errors.brand%}
+                        <label  class="text-danger">{{forms.errors.brand}}</label>
+                        {% endif %}
+
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Offer</label>
+                        
+                        {{form.offer}}
+                        {% if form.errors.offer%}
+                        <label  class="text-danger">{{form.errors.offer}}</label>
+                        {% endif %}
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        
+                        {{form.name}}
+                        {% if form.errors.name%}
+                        <label  class="text-danger">{{form.errors.name}}</label>
+                        {% endif %}
+                        
+                    </div>
+                    {% comment %} <div class="mb-3">
+                        <label for="vendor" class="form-label">Vendor</label>
+                        {{form.vendor}}
+                        {% if form.errors.vendor %}
+                        <label  class="text-danger">{{form.errors.vendor}}</label>
+                        {% endif %}
+                        
+                    </div> {% endcomment %}
+                    
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Default file input example</label>
+                        {{form.product_image}}
+                        
+                        {% if form.errors.product_image%}
+                        <label  class="text-danger">{{form.errors.product_image}}</label>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        {{form.quantity}}
+                        {% if form.errors.quantity%}
+                        <label  class="text-danger">{{form.errors.quantity}}</label>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="selling_price" class="form-label">Selling_price</label>
+                        {{form.selling_price}}
+                        {% if form.errors.selling_price%}
+                        <label  class="text-danger">{{form.errors.selling_price}}</label>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="total_price" class="form-label">Total_price</label>
+                        {{form.original_price}}
+                        {% if form.errors.original_price%}
+                        <label  class="text-danger">{{form.errors.original_price}}</label>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <div class="form-floating">
+                        
+                        {{form.description}}
+                        {% if form.errors.description%}
+                        <label  class="text-danger">{{form.errors.description}}</label>
+                        {% endif %}
+                        </div>   
+                    </div>
+                    <div class="form-check">
+                        {{form.trending}}
+                        {% if form.errors.trending%}
+                        <label  class="text-danger">{{form.errors.trending}}</label>
+                        {% endif %}
+                        <label class="form-check-label" for="trending">
+                            Trending
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        {{form.is_available}}
+                        {% if form.errors.is_available%}
+                        <label  class="text-danger">{{form.errors.is_available}}</label>
+                        {% endif %}
+                        <label class="form-check-label" for="">
+                            Is available
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        {{form.status}}
+                        
+                        <label class="form-check-label" for="status">
+                            Stauts
+                        </label>
+                        {% if form.errors.status%}
+                        <label  class="text-danger">{{form.errors.status}}</label>
+                        {% endif %}
+                    </div>
+                    {{ image_form.management_form }}
+                    {% for form in image_form %}
+                    {{form.as_p}}
+                    {% endfor %}
+                    
+                    <button type="submit" class="btn btn-primary">Update Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

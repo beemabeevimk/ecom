@@ -1,0 +1,50 @@
+{% extends 'admin-templates/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="content-main" style="background-color: #f2f2f2; padding: 20px;">
+<div class="row ">
+    <div class="col-6">
+<div class="content-header">
+    <h6 class="content-title">Responsive Table</h6>
+    <div class="table-responsive">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Product Image</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Product Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Options</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <th scope="row">{{product.id}}</th>
+                    
+                    <td><img style="width:30px; height:30px" src = "{{product.product_image.url}}"></td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td>{{product.original_price}}</td>
+                    <td><a href=" {% url 'update_product' product.id %}" class="btn btn-light">Update</a></td>
+                    <td><a href="{% url 'delete_product' product.id %}" class="btn btn-danger">Delete</a></td>
+                    
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+        
+    </div>
+</div>
+<a  href="add_product" class="btn btn-primary mt-3">Add Product</a>
+</div>
+</div>
+
+</div>
+{% endblock %}
