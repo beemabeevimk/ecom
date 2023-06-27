@@ -32,7 +32,8 @@ urlpatterns = [
     path('block_user/<int:id>',views.block_user, name="block_user"),
     path('unblock_user/<int:id>',views.unblock_user, name="unblock_user"),
 
+
+    path('product_individual/<int:id>',views.product_individual,name="product_individual"),
     
 ]
 
-""" hello """

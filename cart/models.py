@@ -32,7 +32,10 @@ class Cartitem(models.Model):
 
     @property
     def sub_total(self):
-        return self.Product.price * self.quantity
+        return self.Product.selling_price * self.quantity
 
     def _str_(self):
         return str(self.Product)
+    
+    
+    

@@ -12,7 +12,7 @@ from .forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from . import verify
 from .forms import UserCreationForm, VerifyForm
-
+from adminapp.models import Product
 
 # @login_required
 # @verification_required

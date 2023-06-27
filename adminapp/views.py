@@ -11,6 +11,7 @@ from django.db.models import Q
 from adminapp.forms import BrandForm, CategoryForm, ProductForm, ProductImageForm
 from django.http import HttpResponse
 from adminapp.models import Brand, Category, Picture, Product
+import products
 
 # from .models import Product,Category,Subcategory,ProductVariation
 
@@ -42,10 +43,9 @@ def admin_logout(request):
     return redirect('admin_login')
     
     
-    
 # brand================================================================= 
 
-""" hi """
+
 
 @never_cache
 @login_required(login_url='admin_login')
@@ -258,3 +258,16 @@ def unblock_user(request, id):
        return redirect('display_user')
    
    
+   
+   
+# def display_product_individual(request,id):
+#     product = get_object_or_404(Product, id= id)
+#     return render(request,'user/display-product.html',{'products':products})
+
+@login_required
+def product_individual(request, id):
+    product = Product.objects.get(pk=id)
+    # categories = Category.objects.get(pk=id)
+    return render(request,'user/product-individual.html',{'product':product})
+
+

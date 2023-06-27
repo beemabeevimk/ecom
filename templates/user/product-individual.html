@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-        <main class="main">
+        {% comment %} <main class="main">
             <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
                 <div class="container d-flex align-items-center">
                     <ol class="breadcrumb">
@@ -23,7 +23,7 @@
                         </a>
                     </nav><!-- End .pager-nav -->
                 </div><!-- End .container -->
-            </nav><!-- End .breadcrumb-nav -->
+            </nav><!-- End .breadcrumb-nav --> {% endcomment %}
 
             <div class="page-content">
                 <div class="container">
@@ -33,7 +33,7 @@
                                 <div class="product-gallery product-gallery-vertical">
                                     <div class="row">
                                         <figure class="product-main-image">
-                                            <img id="product-zoom" src="assets/images/products/single/centered/1.jpg" data-zoom-image="assets/images/products/single/centered/1-big.jpg" alt="product image">
+                                            <img id="product-zoom" src="{{ product.product_image.url }}" alt="product image">
 
                                             <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                                 <i class="icon-arrows"></i>
@@ -41,20 +41,20 @@
                                         </figure><!-- End .product-main-image -->
 
                                         <div id="product-zoom-gallery" class="product-image-gallery">
-                                            <a class="product-gallery-item active" href="#" data-image="assets/images/products/single/centered/1.jpg" data-zoom-image="assets/images/products/single/centered/1-big.jpg">
-                                                <img src="assets/images/products/single/centered/1-small.jpg" alt="product side">
+                                            <a class="product-gallery-item active" href="#" data-image="{{ product.product_image.url }}" data-zoom-image="assets/images/products/single/centered/1-big.jpg">
+                                                <img src="{{ product.product_image.url }}" alt="product side">
                                             </a>
 
-                                            <a class="product-gallery-item" href="#" data-image="assets/images/products/single/centered/2.jpg" data-zoom-image="assets/images/products/single/centered/2-big.jpg">
-                                                <img src="assets/images/products/single/centered/2-small.jpg" alt="product cross">
+                                            <a class="product-gallery-item" href="#" data-image="{{ product.product_image.url }}" data-zoom-image="assets/images/products/single/centered/2-big.jpg">
+                                                <img src="{{ product.product_image.url }}" alt="product cross">
                                             </a>
 
-                                            <a class="product-gallery-item" href="#" data-image="assets/images/products/single/centered/3.jpg" data-zoom-image="assets/images/products/single/centered/3-big.jpg">
-                                                <img src="assets/images/products/single/centered/3-small.jpg" alt="product with model">
+                                            <a class="product-gallery-item" href="#" data-image="{{ product.product_image.url }}" data-zoom-image="assets/images/products/single/centered/3-big.jpg">
+                                                <img src="{{ product.product_image.url }}" alt="product with model">
                                             </a>
 
-                                            <a class="product-gallery-item" href="#" data-image="assets/images/products/single/centered/4.jpg" data-zoom-image="assets/images/products/single/centered/4-big.jpg">
-                                                <img src="assets/images/products/single/centered/4-small.jpg" alt="product back">
+                                            <a class="product-gallery-item" href="#" data-image="{{ product.product_image.url }}" data-zoom-image="assets/images/products/single/centered/4-big.jpg">
+                                                <img src="{{ product.product_image.url }}" alt="product back">
                                             </a>
                                         </div><!-- End .product-image-gallery -->
                                     </div><!-- End .row -->
@@ -63,7 +63,7 @@
 
                             <div class="col-md-6">
                                 <div class="product-details product-details-centered">
-                                    <h1 class="product-title">Beige metal hoop tote bag</h1><!-- End .product-title -->
+                                    <h1 class="product-title">{{product.name}}</h1><!-- End .product-title -->
 
                                     <div class="ratings-container">
                                         <div class="ratings">
@@ -73,11 +73,11 @@
                                     </div><!-- End .rating-container -->
 
                                     <div class="product-price">
-                                        $76.00
+                                        {{product.selling_price}}
                                     </div><!-- End .product-price -->
 
                                     <div class="product-content">
-                                        <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero.</p>
+                                        <p>{{product.description}}</p>
                                     </div><!-- End .product-content -->
 
                                     <div class="details-filter-row details-row-size">
