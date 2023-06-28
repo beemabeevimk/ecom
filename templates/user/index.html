@@ -205,7 +205,7 @@
                                     </div><!-- End .product-action -->
 
                                     <div class="product-action ">
-                                        <a href="" class="btn-product btn-cart add-to-cart-button" data-id={{product.id}} ><span>add to cart</span></a>
+                                        <a href="/add_to_cart/{{product.id}}" class="btn-product btn-cart add-to-cart-button"  ><span>add to cart</span></a>
                                     </div><!-- End .product-action -->
                                 </figure><!-- End .product-media -->
 
@@ -623,7 +623,7 @@
                                             </div><!-- End .product-action-vertical -->
 
                                             <div class="product-action">
-                                                <a href="{% url 'add_to_cart' %}" class="btn-product btn-cart"><span>add to cart</span></a>
+                                                <a href="" class="btn-product btn-cart"><span>add to cart</span></a>
                                             </div><!-- End .product-action -->
                                         </figure><!-- End .product-media -->
 
@@ -1235,118 +1235,7 @@
             </div><!-- End .owl-carousel -->
         </main><!-- End .main -->
         
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-
-            $(".add-to-cart-button").on('click', function() {
-                console.log("add to cart button clicked")
-            
-                var product_id = $(this).data('id')
-                console.log(product_id)
-            
-                data = {"product_id" : product_id }
-            
-                $.ajax({
-                    url:"{% url 'add_to_cart' %}",
-                    method:"GET",
-                    data:data,
-            
-                    success: function(data) {
-                        console.log("code run success")
-                        console.log(data.status)
-                        console.log(data.message)
-                    }
-                })
-            
-            })
-
-
-
-            $('.value-plus').on('click', function() {
-		console.log("plus function working")
-		var cartItemId = $(this).data('id');
-		var action = $(this).data('action');
-		console.log(cartItemId)
-		updateCartItemQuantity(cartItemId, action);
-		
-
-	  
-	});
-  
-	$('.value-minus').on('click', function() {
-		console.log("minus function working")
-		var cartItemId = $(this).data('id');
-		var action = $(this).data('action');
-		console.log(cartItemId)
-		updateCartItemQuantity(cartItemId, action);
-	  
-	});
-	function updateCartItemQuantity(cartItemId, action) {
-		$.ajax({
-		  url: "{% url 'update_cart_item_quantity' %}",
-		  method: 'GET',
-		  data: {
-			cart_item_id: cartItemId,
-			action: action
-		  },
-		  success: function(response) {
-			if (response.status === 200) {
-			  // Update the quantity value in the template
-			  var quantitySpan = $('.value[data-id="' + cartItemId + '"] span');
-			  quantitySpan.text(response.quantity);
-
-			  // update total price in template
-			  var totalspan = $('.total[data-id="' + cartItemId + '"] span');
-			  totalspan.text(response.subtotal);
-			  
-			}
-		  }
-		});
-	  }
-        </script>
-
-        <script>
-            $('.value-plus').on('click', function() {
-                console.log("plus function working")
-                var cartItemId = $(this).data('id');
-                var action = $(this).data('action');
-                console.log(cartItemId)
-                updateCartItemQuantity(cartItemId, action);
-                
-        
-              
-            });
-          
-            $('.value-minus').on('click', function() {
-                console.log("minus function working")
-                var cartItemId = $(this).data('id');
-                var action = $(this).data('action');
-                console.log(cartItemId)
-                updateCartItemQuantity(cartItemId, action);
-              
-            });
-            function updateCartItemQuantity(cartItemId, action) {
-                $.ajax({
-                  url: "{% url 'update_cart_item_quantity' %}",
-                  method: 'GET',
-                  data: {
-                    cart_item_id: cartItemId,
-                    action: action
-                  },
-                  success: function(response) {
-                    if (response.status === 200) {
-                      // Update the quantity value in the template
-                      var quantitySpan = $('.value[data-id="' + cartItemId + '"] span');
-                      quantitySpan.text(response.quantity);
-        
-                      // update total price in template
-                      var totalspan = $('.total[data-id="' + cartItemId + '"] span');
-                      totalspan.text(response.subtotal);
-                      
-                    }
-                  }
-                });
-              }
-        </script>
+    
+       
 
         {% endblock content %}

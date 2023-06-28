@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'user/base.html' %}
 {% load static %}
 {% block content %}
 
@@ -195,7 +195,7 @@
 										            <h2 class="card-title">
 										                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-5" aria-expanded="false" aria-controls="collapse-5">
 										                    Credit Card (Stripe)
-										                    <img src="assets/images/payments-summary.png" alt="payments cards">
+										                    <img src="{% static 'assets/images/payments-summary.png' %}" alt="payments cards">
 										                </a>
 										            </h2>
 										        </div><!-- End .card-header -->
@@ -207,7 +207,7 @@
 										</div><!-- End .accordion -->
 
 		                				<button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-		                					<span class="btn-text">Place Order</span>
+		                					<span class="btn-text">Place Order</span>      
 		                					<span class="btn-hover-text">Proceed to Checkout</span>
 		                				</button>
 		                			</div><!-- End .summary -->

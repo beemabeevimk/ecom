@@ -28,6 +28,7 @@ class Cartitem(models.Model):
     Product = models.ForeignKey(Product,on_delete=models.CASCADE )
     cart    = models.ForeignKey(Cart,on_delete=models.CASCADE, null=True)
     quantity = models.IntegerField(default=1)
+    total=models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
 
     @property
@@ -36,6 +37,12 @@ class Cartitem(models.Model):
 
     def _str_(self):
         return str(self.Product)
+    
+
+
+    
+
+
     
     
     
