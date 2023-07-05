@@ -20,6 +20,7 @@ def getFileName(request, filename):
     
 class Category(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
+    # slug = models.SlugField(max_length=100,default='')
     image = models.ImageField(upload_to=getFileName,null=True,blank=True)
     description = models.TextField(max_length=150, null=False, blank=False)
     status = models.BooleanField(default=False,help_text="0-show,1-Hidden",blank=True)
@@ -32,7 +33,7 @@ class Product(models.Model):
     
     category = models.ForeignKey(Category,on_delete=models.CASCADE,default='')
     name = models.CharField(max_length=100, null=False, blank=False)
-    slug = models.SlugField(unique=True, max_length=255, null=True, blank=True)
+    # slug = models.SlugField(max_length=255, null=True, blank=True,default='')
     # vendor = models.CharField(max_length=100, null=False, blank=False)
     product_image = models.ImageField(upload_to='product/',null=False,blank=False,default='')
     quantity = models.PositiveIntegerField(default=0)
@@ -71,7 +72,7 @@ class Brand(models.Model):
     name = models.CharField(max_length=100, null= False, blank=False)
     description = models.TextField(max_length=150, null=True, blank=True)
     model = models.CharField(max_length=150, null=True, blank=True)
-    status = models.BooleanField(default=False,help_text="0-show,1-Hidden",blank=True)  
+    status = models.BooleanField(default=False,help_text="0-show,1-Hidden",blank=True)          
 
     def _str_(self):
         return self.name

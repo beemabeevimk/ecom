@@ -52,14 +52,15 @@
 											</td>
 											<td class="price-col">₹{{ cart_item.Product.selling_price }}</td>
 											<td class="quantity-col">
-												<button class="cart-qty-minus" style="border: none; width: 25px;" data-proid="{{ cart_item.quantity }}" type="button" >-</button>
-												<button class="qty" style="cursor: default; border: none; width: 25px;" type="button" >{{ cart_item.quantity }}</button>
-												<button class="cart-qty-plus" style="border: none; width: 25px;" data-proid="{{cart_item.quantity}}"   type="button" >+</button>
+												<button class="cart-qty-minus value-minus" style="border: none; width: 25px;" data-id="{{ cart_item.id }}" data-action="decrease" type="button" >-</button>
+												<button  class="qty value" data-id="{{ cart_item.id }}" style="cursor: default; border: none; width: 25px;" type="button" ><span class="cart_item_quantity">{{ cart_item.quantity }}</span></button>
+												<button class="cart-qty-plus value-plus" style="border: none; width: 25px;" data-id="{{cart_item.id}}" data-action="increase"  type="button" >+</button>
 											</td>
-											<td class="total-col amount">₹{{ subtotal }}</td>
+											<td class="total-col amount total" data-id="{{cart_item.id}}" >₹<span class="sub_total">{{cart_item.sub_total}}</span></td>
 											<td class="remove-col">
-												<button class="btn-remove"><i class="icon-close"></i></button>
+												<a href="{% url 'remove_cart' cart_item.id %}" class="btn-remove"><i class="icon-close"></i></a>
 											</td>
+											
 											
 										</tr>
 										
@@ -113,7 +114,7 @@
 	                					<tbody>
 	                						<tr class="summary-subtotal">
 	                							<td>Subtotal:</td>
-	                							<td class="total">{{ cart_item.sub_total }}</td>
+	                							<td>₹{{ cartitem.subtotal }}</td>
 	                						</tr><!-- End .summary-subtotal -->
 	                						<tr class="summary-shipping">
 	                							<td>Shipping:</td>
@@ -150,14 +151,14 @@
 	                							<td>$20.00</td>
 	                						</tr><!-- End .summary-shipping-row --> {% endcomment %}
 
-	                						<tr class="summary-shipping-estimate">
+	                						{% comment %} <tr class="summary-shipping-estimate">
 	                							<td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
 	                							<td>&nbsp;</td>
-	                						</tr><!-- End .summary-shipping-estimate -->
+	                						</tr><!-- End .summary-shipping-estimate --> {% endcomment %}
 
 	                						<tr class="summary-total">
 	                							<td>Total:</td>
-	                							<td>$160.00</td>
+	                							<td>₹{{ subtotal }}</td>
 	                						</tr><!-- End .summary-total -->
 	                					</tbody>
 	                				</table><!-- End .table table-summary -->
@@ -176,189 +177,55 @@
 	
 
 
-	<!-- <script>
-	$(document).ready(function () {
-				   update_amounts();
-			});
-			   
-				 function update_amounts() {
-				   var sum = 0.0;
-				   $("#myTable > tbody > tr").each(function () {
-					 var qty = $(this).find(".qty").text();
-					 var price = $(this)
-					   .find(".price")
-					   .text()
-					   .replace(/[^\d\.]/g, "");
-					 var amount = qty * price;
-					 sum += amount;
-					 $(this)
-					   .find(".amount")
-					   .text("₹" + amount.toFixed(2));
-				   });
-				   $(".total").text("₹" + sum.toFixed(2));
-				 }
-
-				 
-				 $(".cart-qty-plus").on("click", function () {
-					 console.log('clicked')
-					 var pro = $(this).data("proid");
-					 var input = $(this).siblings(".qty");
-					 var cartid = $("#cartid").val();
-
-					 var data = {"pro":pro, "input":input, "cartid":cartid }
-
-					 $.ajax({
-					
-					 data:data,
-					 method: "GET",
-					 success: function (response) {
-						 console.log(response.message);
-						 if (response.message === "0") {
-						 console.log("failed");
-						 Swal.fire({
-							 title: "Exceed",
-							 text: "Product quantity exceeds available stock.",
-							 icon: "error",
-							 confirmButtonText: "OK",
-						 });
-						 } else {
-						 console.log("pass");
-						 var val = parseInt(input.text());
-						 input.text(val + 1);
-						 update_amounts();
-						 }
-					 },
-					 });
-				 });
-	 
-				 $(".cart-qty-minus").on("click", function () {
-					 console.log("clicked");
-					 var proid = $(this).data("proid");
-					 var input = $(this).siblings(".qty");
-					 var cartid = $("#cartid").val();
-					 $.ajax({
-					 url: '/decrement?id=' + proid + '&val=' + input.text() + '&cartid=' + cartid,                    
-					 method: "GET",
-					 success: function (response) {
-						 if (response.message === "0") {
-						 Swal.fire({
-							 title: "Fall Short",
-							 html: "Product quantity cannot be less than 1,<br> You can delete product.",
-							 icon: "error",
-							 confirmButtonText: "OK",
-						 });
-						 } else {
-						 var val = parseInt(input.text());
-						 input.text(val - 1);
-						 update_amounts();
-						 }
-					 },
-					 });
-				 });
-	 
-	 </script>  -->
+	
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-{% comment %} <script>
-	$(".cart-qty-plus").on("click", function () {
-		console.log('clicked')
-		var pro = $(this).data("proid");
-		var input = $(this).siblings(".qty").text()
-		var cartid = $("#cartid").val()
-		console.log(pro)
-		console.log(input)
-		console.log(cartid)
-		var data = {"pro":pro, "input":input, "cartid":cartid }
-
-		$.ajax({
-			
-			data:data,
-			method: "GET",
-			success: function(data) {
-				console.log("code run success")
-			}
-		})
-		
-	});
-
-</script> {% endcomment %}
 
 <script>
-	$(document).ready(function () {
-		   update_amounts();
-		 });
-	   
-		 function update_amounts() {
-		   var sum = 0.0;
-		   $("#myTable > tbody > tr").each(function () {
-			 var qty = $(this).find(".qty").text();
-			 var price = $(this)
-			   .find(".price")
-			   .text()
-			   .replace(/[^\d\.]/g, "");
-			 var amount = qty * price;
-			 sum += amount;
-			 $(this)
-			   .find(".amount")
-			   .text("₹" + amount.toFixed(2));
-		   });
-		   $(".total").text("₹" + sum.toFixed(2));
-		 }
-		 $(".cart-qty-plus").on("click", function () {
-			 console.log('clicked')
-			 var pro = $(this).data("proid");
-			 var input = $(this).siblings(".qty");
-			 var cartid = $("#cartid").val();
-			 $.ajax({
-			 url: 'update_cart' + pro + '&val=' + input.text() + '&cartid=' + cartid,
-			 method: "GET",
-			 success: function (response) {
-				 console.log(response.message);
-				 if (response.message === "0") {
-				 console.log("failed");
-				 Swal.fire({
-					 title: "Exceed",
-					 text: "Product quantity exceeds available stock.",
-					 icon: "error",
-					 confirmButtonText: "OK",
-				 });
-				 } else {
-				 console.log("pass");
-				 var val = parseInt(input.text());
-				 input.text(val + 1);
-				 update_amounts();
-				 }
-			 },
-			 });
-		 });
+	$('.value-plus').on('click', function() {
+		console.log("plus function working")
+		var cartItemId = $(this).data('id');
+		var action = $(this).data('action');
+		console.log(cartItemId)
+		updateCartItemQuantity(cartItemId, action);
+		
 
-		 $(".cart-qty-minus").on("click", function () {
-			 console.log("clicked");
-			 var proid = $(this).data("proid");
-			 var input = $(this).siblings(".qty");
-			 var cartid = $("#cartid").val();
-			 $.ajax({
-			 url: '/decrement?id=' + proid + '&val=' + input.text() + '&cartid=' + cartid,                    
-			 method: "GET",
-			 success: function (response) {
-				 if (response.message === "0") {
-				 Swal.fire({
-					 title: "Fall Short",
-					 html: "Product quantity cannot be less than 1,<br> You can delete product.",
-					 icon: "error",
-					 confirmButtonText: "OK",
-				 });
-				 } else {
-				 var val = parseInt(input.text());
-				 input.text(val - 1);
-				 update_amounts();
-				 }
-			 },
-			 });
-		 });
+	  
+	});
+  
+	$('.value-minus').on('click', function() {
+		console.log("minus function working")
+		var cartItemId = $(this).data('id');
+		var action = $(this).data('action');
+		console.log(cartItemId)
+		updateCartItemQuantity(cartItemId, action);
+	  
+	});
+	function updateCartItemQuantity(cartItemId, action) {
+		$.ajax({
+		  url: "{% url 'update_cart_item_quantity' %}",
+		  method: 'GET',
+		  data: {
+			cart_item_id: cartItemId,
+			action: action
+		  },
+		  success: function(response) {
+			if (response.status === 200) {
+			  // Update the quantity value in the template
+			  var quantitySpan = $('.value[data-id="' + cartItemId + '"] span');
+			  quantitySpan.text(response.quantity);
 
+			  // update total price in template
+			  var totalspan = $('.total[data-id="' + cartItemId + '"] span');
+			  totalspan.text(response.subtotal);
+			  
+			}
+		  }
+		});
+	  }
 </script>
+
 
       {% endblock content %}

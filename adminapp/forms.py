@@ -5,18 +5,6 @@ from django.contrib.auth.models import User
 
 from adminapp.models import Brand, Category, Picture, Product
 
-# class Aforms(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields =['username','first_name','last_name','email','password']
-#         widgets={
-#             'username':forms.TextInput(attrs={'class':'form-control'}),
-#             'first_name':forms.TextInput(attrs={'class':'form-control'}),
-#             'last_name':forms.TextInput(attrs={'class':'form-control'}),
-#             'email':forms.EmailInput(attrs={'class':'form-control'}),
-#             'password':forms.PasswordInput(render_value=True, attrs={'class':'form-control'}),
-#         } 
-
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','id':'name'}))

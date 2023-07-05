@@ -1,5 +1,5 @@
 from django.forms import PasswordInput
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -12,13 +12,21 @@ from .forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from . import verify
 from .forms import UserCreationForm, VerifyForm
-from adminapp.models import Product
+from adminapp.models import Product,Category
+
 
 # @login_required
 # @verification_required
 def home(request):
-    products = Product.objects.all()
-    return render(request,'user/index.html',{'products':products})    
+    # categories = None
+    # products = None
+    
+    # if category_slug != None:
+    #     categories = get_object_or_404(Category,slug=category_slug)
+    #     products = Product.objects.filter(category=categories, is_available = True)
+    # else:
+    products = Product.objects.all().filter(is_available=True)
+    return render(request,'user/index.html',{'products':products})      
 
 
 

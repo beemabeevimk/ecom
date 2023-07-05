@@ -1,0 +1,102 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block content %}
+
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">My Account<span> </span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <!-- <li class="breadcrumb-item"><a href="#">Shop</a></li> -->
+                <li class="breadcrumb-item active" aria-current="page">My Account</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+        <div class="dashboard">
+            <div class="container">
+                <div class="row">
+                    {% comment %} <aside class="col-md-4 col-lg-3">
+                        <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-dashboard-link" href="/profile" role="tab" aria-controls="tab-dashboard" aria-selected="false">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-orders-link" href="/orders" role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-orders-link" href="/wallet" role="tab" aria-controls="tab-orders" aria-selected="false">wallet</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" id="tab-address-link" href="/addresses" role="tab" aria-controls="tab-address" aria-selected="true">Adresses</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-account-link" href="/editProfile" role="tab" aria-controls="tab-account" aria-selected="false">Edit Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-account-link" href="/changePassword" role="tab" aria-controls="tab-account" aria-selected="false">Change Password</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">Sign Out</a>
+                            </li>
+                        </ul>
+                    </aside><!-- End .col-lg-3 --> {% endcomment %}
+
+                    <div class="col-md-8 col-lg-9">
+                        <div class="tab-content">                                
+                            <div class="tab-pane fade show active" id="tab-input-address" role="tabpanel" aria-labelledby="tab-account-link">
+                                <form action="/add_address" method="POST">
+                                    {% csrf_token %}
+                                    <label>Name <span style="color: red;">*</span></label>
+                                    <input type="text" name="name" class="form-control" required>
+                                    
+                                    <label>Address <span style="color: red;">*</span></label>
+                                    <input type="text" name="address" class="form-control" required>
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>City <span style="color: red;">*</span></label>
+                                            <input type="text" name="city" class="form-control" required>
+                                        </div><!-- End .col-sm-6 -->
+
+                                        <div class="col-sm-6">
+                                            <label>State <span style="color: red;">*</span></label>
+                                            <input type="text" name="state" class="form-control" required>
+                                        </div><!-- End .col-sm-6 -->
+                                    </div><!-- End .row -->
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>Pincode <span style="color: red;">*</span></label>
+                                            <input type="text" name="pincode" class="form-control" required>
+                                        </div><!-- End .col-sm-6 -->
+
+                                        <div class="col-sm-6">
+                                            <label>Phone Number <span style="color: red;">*</span></label>
+                                            <input type="text" name="phonenumber" class="form-control" required>
+                                        </div><!-- End .col-sm-6 -->
+                                    </div><!-- End .row -->
+
+                                    {% comment %} <label>Landmark</label>
+                                    <input type="text" name="landmark" class="form-control"> {% endcomment %}
+
+                                    <button type="submit" class="btn btn-outline-primary-2">
+                                        <span>ADD ADDRESS</span>
+                                        <i class="icon-long-arrow-right"></i>
+                                    </button>
+                                </form>
+                            </div><!-- .End .tab-pane -->
+                        </div>
+                    </div><!-- End .col-lg-9 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .dashboard -->
+    </div><!-- End .page-content -->
+
+    {% endblock content %}

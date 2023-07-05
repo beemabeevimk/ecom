@@ -17,3 +17,20 @@ class CustomUserCreationForm(UserCreationForm):
 
 class VerifyForm(forms.Form):
     code = forms.CharField(max_length=8, required=True, widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Code'}))
+
+
+
+
+
+# from django import forms
+# from django.contrib.auth import get_user_model
+# from .models import Address
+
+# User = get_user_model()
+
+# class AddressForm(forms.ModelForm):
+#     class Meta:
+#         model = Address
+#         fields = ['user', 'name', 'city', 'pincode', 'phone']
+
+ 

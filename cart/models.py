@@ -24,14 +24,15 @@ class   Cart(models.Model):
 
 
 class Cartitem(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)  
     Product = models.ForeignKey(Product,on_delete=models.CASCADE )
     cart    = models.ForeignKey(Cart,on_delete=models.CASCADE, null=True)
     quantity = models.IntegerField(default=1)
     total=models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
+    
 
-    @property
+    # @property  
     def sub_total(self):
         return self.Product.selling_price * self.quantity
 

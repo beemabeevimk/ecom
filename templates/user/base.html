@@ -344,41 +344,48 @@
                         </a>
                         {% endif %} 
                        
-                        
+                       {% comment %}  
                         <a href="wishlist.html" class="wishlist-link">
                             <i class="icon-heart-o"></i>
                             <span class="wishlist-count">3</span>
-                        </a>
+                        </a> {% endcomment %}
 
                         <div class="dropdown cart-dropdown">
                             <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                                 <i class="icon-shopping-cart"></i>
-                                <span class="cart-count">2</span>
+                                {% comment %} <span class="cart-count">2</span> {% endcomment %}
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right">
                                 <div class="dropdown-cart-products">
+                                    {% for cart_item in cart_items %}
+                                
                                     <div class="product">
                                         <div class="product-cart-details">
+                                            
                                             <h4 class="product-title">
-                                                <a href="product.html">Beige knitted elastic runner shoes</a>
+                                                <a href="product.html">{{cart_item.Product.name}}</a>
                                             </h4>
 
                                             <span class="cart-product-info">
-                                                <span class="cart-product-qty">1</span>
-                                                x $84.00
+                                                {% comment %} <span class="cart-product-qty">1</span> {% endcomment %}
+                                                ₹{{cart_item.Product.selling_price}}
                                             </span>
+                                           
                                         </div><!-- End .product-cart-details -->
 
                                         <figure class="product-image-container">
+                                          
                                             <a href="product.html" class="product-image">
-                                                <img src="{% static 'images/products/cart/product-1.jpg' %}" alt="product">
+                                                <img src="{{ cart_item.Product.product_image.url }}" alt="product">
                                             </a>
+                                            
                                         </figure>
                                         <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
                                     </div><!-- End .product -->
+                                    {% endfor %}
 
-                                    <div class="product">
+                                    {% comment %} <div class="product">
                                         <div class="product-cart-details">
                                             <h4 class="product-title">
                                                 <a href="product.html">Blue utility pinafore denim dress</a>
@@ -396,13 +403,13 @@
                                             </a>
                                         </figure>
                                         <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
+                                    </div><!-- End .product --> {% endcomment %}
                                 </div><!-- End .cart-product -->
 
-                                <div class="dropdown-cart-total">
+                               <div class="dropdown-cart-total">
                                     <span>Total</span>
 
-                                    <span class="cart-total-price">$160.00</span>
+                                    <span class="cart-total-price">₹{{ subtotal }}</span>
                                 </div><!-- End .dropdown-cart-total -->
 
                                 <div class="dropdown-cart-action">

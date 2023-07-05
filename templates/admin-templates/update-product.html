@@ -11,36 +11,36 @@
                     <div class="mb-3">
                         <label  class="form-label">Category</label>
                         
-                        {{form.category}}
-                        {% if form.error.category%}
-                        <label  class="text-danger">{{forms.errors.category}}</label>
+                        {{ form.category }}
+                        {% if form.error.category %}
+                        <label  class="text-danger">{{ forms.errors.category }}</label>
                         {% endif %}
 
                     </div>
                     <div class="mb-3">
                         <label  class="form-label">Brand</label>
                         
-                        {{form.brand}}
-                        {% if form.errors.brand%}
-                        <label  class="text-danger">{{forms.errors.brand}}</label>
+                        {{ form.brand }}
+                        {% if form.errors.brand %}
+                        <label  class="text-danger">{{ forms.errors.brand }}</label>
                         {% endif %}
 
                     </div>
                     <div class="mb-3">
                         <label  class="form-label">Offer</label>
                         
-                        {{form.offer}}
-                        {% if form.errors.offer%}
-                        <label  class="text-danger">{{form.errors.offer}}</label>
+                        {{ form.offer }}
+                        {% if form.errors.offer %}
+                        <label  class="text-danger">{{ form.errors.offer }}</label>
                         {% endif %}
 
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         
-                        {{form.name}}
-                        {% if form.errors.name%}
-                        <label  class="text-danger">{{form.errors.name}}</label>
+                        {{ form.name }}
+                        {% if form.errors.name %}
+                        <label  class="text-danger">{{ form.errors.name }}</label>
                         {% endif %}
                         
                     </div>
@@ -55,16 +55,16 @@
                     
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Default file input example</label>
-                        {{form.product_image}}
+                        {{ form.product_image }}
                         
-                        {% if form.errors.product_image%}
+                        {% if form.errors.product_image %}
                         <label  class="text-danger">{{form.errors.product_image}}</label>
                         {% endif %}
                     </div>
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Quantity</label>
-                        {{form.quantity}}
-                        {% if form.errors.quantity%}
+                        {{ form.quantity }}
+                        {% if form.errors.quantity %}
                         <label  class="text-danger">{{form.errors.quantity}}</label>
                         {% endif %}
                     </div>

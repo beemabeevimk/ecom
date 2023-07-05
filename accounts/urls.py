@@ -20,6 +20,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('',views.home,name='home'),
+    # path('<slug:category_slug>/',views.home,name='products_by_category'),
     path('signup',views.signup,name='signup'),
     path('user_login',views.user_login,name='user_login'),
     path('user_logout',views.user_logout,name='user_logout'),
