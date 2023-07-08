@@ -30,7 +30,7 @@ def add_to_cart(request,id):
         # If the item already exists, increase its quantity by 1
         cart_item.quantity += 1
     cart_item.save()
-    return redirect('home')     
+    return redirect('home')    
 
 
 
@@ -77,12 +77,24 @@ def display_cart(request):
     subtotal=cart_items.aggregate(total=Sum('total'))
     print(subtotal['total'])
     # Calculate the subtotal for each cart item
-    
-
     # if User.is_not_authenticated:
     #     return redirect('user_login')
     
     return render(request, 'user/cart.html',{'cart': cart,'cart_items': cart_items,'subtotal':subtotal['total']})
+
+
+
+
+def calculate_total(request):
+    cart_items = Cartitem.objects.filter(user=request.user)  # Assuming you have a CartItem model with a user field
+
+    # Calculate the subtotal for each cart item
+    subtotal_list = [item.quantity * item.price for item in cart_items]
+
+    # Calculate the total by summing up the subtotals
+    total = sum(subtotal_list)
+
+    return total
 
 
 

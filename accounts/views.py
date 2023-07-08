@@ -7,7 +7,8 @@ from django.contrib.auth import get_user_model
 from accounts.models import CustomUser
 from django.contrib.auth import authenticate,login as auth_login,logout
 
-from adminapp.models import Product
+from adminapp.models import Product,Category
+from cart.models import Cartitem,Cart
 from .forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from . import verify
@@ -18,14 +19,9 @@ from adminapp.models import Product,Category
 # @login_required
 # @verification_required
 def home(request):
-    # categories = None
-    # products = None
-    
-    # if category_slug != None:
-    #     categories = get_object_or_404(Category,slug=category_slug)
-    #     products = Product.objects.filter(category=categories, is_available = True)
-    # else:
     products = Product.objects.all().filter(is_available=True)
+    # cart = Cart.objects.filter(user=request.user).first()
+    # cart_items = Cartitem.objects.filter(cart=cart)
     return render(request,'user/index.html',{'products':products})      
 
 
@@ -128,7 +124,8 @@ def check_phone_number(phone_number):
 
 
 def wireless_earbuds(request):
-    return render(request,'user/wireless_earbuds.html')
+    products = Product.objects.all().filter(category_id=1,is_available=True)
+    return render(request,'user/wireless_earbuds.html',{'products':products})
     
 
 def change_pass(request):

@@ -4,8 +4,9 @@
 
    
         <main class="main">
-            <div class="intro-slider-container">
-                <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light mb-0" data-toggle="owl" data-owl-options='{
+           
+            {% comment %} <div class="intro-slider-container"> {% endcomment %}
+                {% comment %} <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light mb-0" data-toggle="owl" data-owl-options='{
                         "dots": true,
                         "nav": false, 
                         "responsive": {
@@ -14,8 +15,12 @@
                                 "dots": false
                             }
                         }
-                    }'>
-                     <div class="intro-slide" style="background-image: url({% static 'images/demos/demo-8/slider/banner-home.png' %});"> 
+                    }'> {% endcomment %}
+                    <div class="intro-slide" style="background-image: url({% static 'images/demos/demo-8/slider/banner-home.png' %}" alt="Banner)">
+                        {% comment %} <img src="{% static 'images/demos/demo-8/slider/banner-home.png' %}" alt="Banner"> {% endcomment %}
+                    
+
+                     
                          {% comment %} <div class="container intro-content text-left">
                             <h3 class="intro-subtitle">Limited time only *</h3><!-- End .h3 intro-subtitle -->
                             <h1 class="intro-title">Summer<br><strong>sale</strong></h1><!-- End .intro-title -->
@@ -40,12 +45,12 @@
                             </a>
                         </div><!-- End .intro-content --> {% endcomment %}
                         {% comment %} <img class="position-left" src="{% static 'images/demos/demo-8/slider/img-2.png' %}"> {% endcomment %}
-                    </div><!-- End .intro-slide -->
-                </div><!-- End .intro-slider owl-carousel owl-simple -->
+                    {% comment %} </div><!-- End .intro-slide --> {% endcomment %}
+                {% comment %} </div><!-- End .intro-slider owl-carousel owl-simple --> {% endcomment %}
 
-                <span class="slider-loader"></span><!-- End .slider-loader -->
-            </div><!-- End .intro-slider-container -->
-
+                {% comment %} <span class="slider-loader"></span><!-- End .slider-loader --> {% endcomment %}
+            {% comment %} </div><!-- End .intro-slider-container --> {% endcomment %}
+            SHOP NOW 
             <div class="pt-2 pb-2">
                 <div class="container brands">
                     <div class="banner-group">
@@ -55,6 +60,7 @@
                                     <a href="#">
                                         <img src="{% static 'images\demos\demo-8\banners\Airpodes-banner-2.jpg.webp' %}" alt="Banner">
                                     </a>
+                                 
 
                                     <div class="banner-content">
                                         <h4 class="banner-subtitle"><a href="#">Final reduction</a></h4><!-- End .banner-subtitle -->
@@ -152,7 +158,7 @@
             <div class="mb-3"></div><!-- End .mb-6 -->
 
             <div class="container">
-                <ul class="nav nav-pills nav-big nav-border-anim justify-content-center mb-2 mb-md-3" role="tablist">
+                {% comment %} <ul class="nav nav-pills nav-big nav-border-anim justify-content-center mb-2 mb-md-3" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="products-featured-link" data-toggle="tab" href="#products-featured-tab" role="tab" aria-controls="products-featured-tab" aria-selected="true">Featured</a>
                     </li>
@@ -162,7 +168,7 @@
                     <li class="nav-item">
                         <a class="nav-link" id="products-top-link" data-toggle="tab" href="#products-top-tab" role="tab" aria-controls="products-top-tab" aria-selected="false">Top Rated</a>
                     </li>
-                </ul>
+                </ul> {% endcomment %}
 
                 <div class="tab-content tab-content-carousel">
                     <div class="tab-pane p-0 fade show active" id="products-featured-tab" role="tabpanel" aria-labelledby="products-featured-link">
@@ -193,19 +199,21 @@
                                 }
                             }'>
                             {% for product in products %}
+                            <div class="product">
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="{% url 'product_individual' product.id %}">
                                         <img src="{{ product.product_image.url }}" alt="Product image" class="product-image">
                                         <img src="{{ product.product_image.url }}" alt="Product image" class="product-image-hover">
                                     </a>
-
+                            
                                     <div class="product-action-vertical">
                                         <a href="#" class="btn-product-icon btn-wishlist btn-expandable" title="Add to wishlist"><span>add to wishlist</span></a>
                                     </div><!-- End .product-action -->
-
-                                    <div class="product-action ">
-                                        <a href="{% url 'add_to_cart' product.id %}" class="btn-product btn-cart add-to-cart-button"  ><span>add to cart</span></a>
+                            
+                                    <div class="product-action">
+                                        <a href="{% url 'add_to_cart' product.id %}" class="btn-product btn-cart add-to-cart-button" onclick="addToCart(event, '{{ product.id }}')"><span>Add to cart</span></a>
+                                        <span class="add-to-cart-status" style="display: none;"></span>
                                     </div><!-- End .product-action -->
                                 </figure><!-- End .product-media -->
 
@@ -232,8 +240,11 @@
                                 </div><!-- End .product-body -->
 
                             </div><!-- End .product -->
+                        </div>
+                        
                             {% endfor %}
 
+                        <div class="owl-carousel">
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
@@ -289,12 +300,12 @@
                                     </div><!-- End .product-price -->
                                 </div><!-- End .product-body -->
                             </div><!-- End .product -->
-
+                            {% for product in products %}
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="{% static 'images/demos/demo-8/products/product-4-1.jpg' %}" alt="Product image" class="product-image">
-                                        <img src="{% static 'images/demos/demo-8/products/product-4-2.jpg' %}" alt="Product image" class="product-image-hover">
+                                        <img src="{{ product.product_image.url }}" alt="Product image" class="product-image">
+                                        <img src="{{ product.product_image.url }}" alt="Product image" class="product-image-hover">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -310,7 +321,7 @@
                                     <div class="product-cat">
                                         <a href="#">Clothing</a>
                                     </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">Linen-blend paper bag trousers</a></h3><!-- End .product-title -->
+                                    <h3 class="product-title"><a href="product.html">{{ product.name }}</a></h3><!-- End .product-title -->
                                     <div class="product-price">
                                         $17.99
                                     </div><!-- End .product-price -->
@@ -325,7 +336,7 @@
 
                                 </div><!-- End .product-body -->
                             </div><!-- End .product -->
-
+                            {% endfor %}
                         </div><!-- End .owl-carousel -->
                     </div><!-- .End .tab-pane -->
                     <div class="tab-pane p-0 fade" id="products-sale-tab" role="tabpanel" aria-labelledby="products-sale-link">
@@ -538,10 +549,10 @@
 
             <div class="mb-3 mb-xl-2"></div><!-- End .mb-3 -->
 
-            <div class="trending">
+            {% comment %} <div class="trending">
                 <a href="#">
                     <img src="{% static 'images/demos/demo-8/banners/banner-4.jpg' %}" alt="Banner">
-                </a>
+                </a> {% endcomment %}
                 {% comment %} <div class="banner banner-big d-md-block">
                     <div class="banner-content text-center">
                         <h4 class="banner-subtitle text-white">Trending</h4><!-- End .banner-subtitle -->
@@ -551,8 +562,8 @@
                         <a href="category.html" class="btn btn-primary-white"><span>Shop Now</span><i class="icon-long-arrow-right"></i></a>
                     </div><!-- End .banner-content -->
                 </div><!-- End .banner --> {% endcomment %}
-            </div>
-            <div class="container new-arrivals">
+            {% comment %} </div> {% endcomment %}
+            {% comment %} <div class="container new-arrivals">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="banner banner-overlay">
@@ -582,7 +593,7 @@
                         </div><!-- End .banner -->
                     </div><!-- End .col-md-6 -->
                 </div><!-- End .row -->
-            </div><!-- End .container -->
+            </div><!-- End .container --> {% endcomment %}
 
             <div class="mb-5"></div><!-- End .mb-5 -->
 
@@ -609,13 +620,16 @@
                     <div class="tab-pane p-0 fade show active" id="recent-all-tab" role="tabpanel" aria-labelledby="recent-all-link">
                         <div class="products">
                             <div class="row justify-content-center">
+                                {% for product in products %}
                                 <div class="col-6 col-md-4 col-lg-3">
+                                  
                                     <div class="product product-2 text-center">
+                                       
                                         <figure class="product-media">
                                             <span class="product-label label-sale">Sale</span>
                                             <a href="product.html">
-                                                <img src="{% static 'images/demos/demo-8/products/product-5-1.jpg' %}" alt="Product image" class="product-image">
-                                                <img src="{% static 'images/demos/demo-8/products/product-5-2.jpg' %}" alt="Product image" class="product-image-hover">
+                                                <img src="{{ product.product_image.url }}" alt="Product image" class="product-image">
+                                                <img src="{{ product.product_image.url }}" alt="Product image" class="product-image-hover">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -629,16 +643,19 @@
 
                                         <div class="product-body">
                                             <div class="product-cat">
-                                                <a href="#">Clothing</a>
+                                                <a href="#">{{product.category}}</a>
                                             </div><!-- End .product-cat -->
-                                            <h3 class="product-title"><a href="product.html">Tie-detail top</a></h3><!-- End .product-title -->
+                                            <h3 class="product-title"><a href="product.html">{{product.name}}</a></h3><!-- End .product-title -->
                                             <div class="product-price">
-                                                <span class="new-price">Now $3.99</span>
-                                                <span class="old-price">Was $6.99</span>
+                                                {% comment %} <span class="new-price">Now $3.99</span> {% endcomment %}
+                                                {% comment %} <span class="old-price">Was $6.99</span> {% endcomment %}
                                             </div><!-- End .product-price -->
                                         </div><!-- End .product-body -->
+                                       
                                     </div><!-- End .product -->
+                                   
                                 </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+                                {% endfor %} 
 
                                 <div class="col-6 col-md-4 col-lg-3">
                                     <div class="product product-2 text-center">
@@ -1234,8 +1251,17 @@
                 </div><!-- End .instagram-feed -->
             </div><!-- End .owl-carousel -->
         </main><!-- End .main -->
+
         
+        {% comment %} <script>
+            function addToCart(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+        
+            // Update the UI to show "Added to Cart"
+            var statusElement = $(event.target).closest('.product-action').find('.add-to-cart-status');
+            statusElement.text('Added to Cart').css('color', 'green').show();
+        }
+        </script> {% endcomment %}
     
        
-
         {% endblock content %}
