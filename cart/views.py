@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.views import View
@@ -6,13 +6,28 @@ from accounts.models import Address
 
 
 from adminapp.models import Product
-from cart.models import Cart, Cartitem, User
+from cart.models import Cart, Cartitem, OrderProduct, Orders, Payment, User
 from django.http import HttpResponse, JsonResponse
 from django.db.models import Sum
-from django.views.generic import CreateView
+from django.forms.models import model_to_dict
+# from django.views.generic import CreateView
 # from accounts.forms import AddressForm
 
-# Create your views here.
+
+
+
+
+def calculate_total(request):
+    cart_items = Cartitem.objects.filter(user=request.user)  # Assuming you have a CartItem model with a user field
+   
+    # Calculate the subtotal for each cart item
+    subtotal_list = [item.quantity * item.total for item in cart_items]
+
+    # Calculate the total by summing up the subtotals
+    total = sum(subtotal_list)   
+   
+    return total   
+
 
 
 @login_required
@@ -50,6 +65,7 @@ def remove_cart(request, id):
 def update_cart_item_quantity(request):
         cart_item_id = request.GET.get('cart_item_id')
         action = request.GET.get('action')
+       
 
         # cart_item = Cartitem.objects.get(id=cart_item_id)
         try:
@@ -63,9 +79,18 @@ def update_cart_item_quantity(request):
         elif action == 'decrease':
             cart_item.quantity -= 1 if cart_item.quantity > 1 else 0
         cart_item.save()
+        subtotal=calculate_total(request)
+        print(subtotal)
   
 
-        return JsonResponse({'status': 200,'quantity': cart_item.quantity,'subtotal': cart_item.sub_total() })
+        return JsonResponse({'status': 200,'quantity': cart_item.quantity,'subtotal': cart_item.sub_total(),"total_total":subtotal })
+
+
+
+  
+
+
+
 
 
     
@@ -74,27 +99,15 @@ def display_cart(request):
     cart = Cart.objects.filter(user=request.user).first()
   
     cart_items = Cartitem.objects.filter(cart=cart)
-    subtotal=cart_items.aggregate(total=Sum('total'))
-    print(subtotal['total'])
+    subtotal=calculate_total(request)
+    print(subtotal)
     # Calculate the subtotal for each cart item
     # if User.is_not_authenticated:
     #     return redirect('user_login')
     
-    return render(request, 'user/cart.html',{'cart': cart,'cart_items': cart_items,'subtotal':subtotal['total']})
+    return render(request, 'user/cart.html',{'cart': cart,'cart_items': cart_items,"total_total":subtotal})
 
 
-
-
-def calculate_total(request):
-    cart_items = Cartitem.objects.filter(user=request.user)  # Assuming you have a CartItem model with a user field
-
-    # Calculate the subtotal for each cart item
-    subtotal_list = [item.quantity * item.price for item in cart_items]
-
-    # Calculate the total by summing up the subtotals
-    total = sum(subtotal_list)
-
-    return total
 
 
 
@@ -113,16 +126,41 @@ class CheckoutView(View):
     def get(self, request):
         cart=Cart.objects.get(user=request.user)
         cart_items = Cartitem.objects.filter(user=request.user)
-        subtotal=cart_items.aggregate(total=Sum('total'))
+        # subtotal=cart_items.aggregate(total=Sum('total'))
+        subtotal=calculate_total(request)
         address = Address.objects.filter(user=request.user)
+        # print(address)
         
+      
         context = {
             'cart_items': cart_items,
-            'subtotal':subtotal['total'],
+            # 'subtotal':subtotal['total'],
             'address': address,
+            "total_total":subtotal,
+             'cart':cart.cart_id,
         }
 
         return render(request, 'user/checkout.html',context) 
+    
+    
+    
+    
+    
+    
+    
+def payment_page(request,id):
+    cart_items = Cartitem.objects.filter(user=request.user)
+    subtotal=calculate_total(request)
+    # address = Address.objects.filter(user=request.user)
+    address = Address.objects.get(id=id)
+    
+    context = {
+            'cart_items': cart_items,
+            # 'subtotal':subtotal['total'],
+            'address': address,
+            "total_total":subtotal,
+        }
+    return render(request,'user/payment.html',context)
     
 
 # class AddAddressView(CreateView):
@@ -180,4 +218,87 @@ class DeleteAddressView(View):
 
 
 def order_success(request):
-    return render(request,'user/success.html')
+    order_id = request.GET.get('order')
+    print("******")                                
+    # order = get_object_or_404(Orders, id=order_id)
+    
+    
+    order = OrderProduct.objects.get(id=order_id)
+    print(order)
+    product = order.product
+    
+    # Access the fields from the related Product model
+    product_image = product.product_image
+    selling_price = product.selling_price
+    # Retrieve other fields from the OrderProduct model
+    user = order.user
+    address = order.address
+    ordered = order.ordered
+    is_paid = order.is_paid
+    status = order.status
+    quantity = order.quantity
+    payment = order.payment
+       
+    data = {
+        'order_id': order_id,
+        'quantity': quantity,
+        'product': product,
+        'product_price':selling_price,
+        'product_name':product.name,
+        'ordered':ordered,
+        'is_paid':is_paid,
+        'payment':payment,
+        'user': str(user),
+        'address':address,
+        'status':status,
+        'image_url':product_image
+    }       
+                                   
+    return JsonResponse({'response': data})
+
+    
+    
+
+#ajax method to create order
+def order(request):
+    if request.method == 'POST':
+        cart_items = Cartitem.objects.filter(user=request.user) 
+        address = request.POST.get('address')
+        payment_method = request.POST.get('payment_method')
+        payment = Payment.objects.create(
+            user=request.user,
+            payment_method=request.POST.get('paymentmethod'),
+            amount=request.POST.get('grandPriceText'),
+        )
+        payment.save()
+        
+        for cart_item in cart_items:
+            product = cart_item.Product
+            quantity = cart_item.quantity
+            product_price = cart_item.Product.selling_price
+            ordered = False
+            is_paid = False
+
+            ordered_product = OrderProduct.objects.create(
+                product=product,
+                quantity=quantity,
+                product_price=product_price,
+                ordered=ordered,
+                is_paid=is_paid,
+                payment=payment,
+                user=request.user,
+                address=address,
+            )
+            
+            # ordered_product.save()
+            
+        # print(ordered_product) 
+        # print(ordered_product.id) 
+        
+        response_data = {
+            'order_id': ordered_product.id
+        }
+
+        return JsonResponse({'response':response_data})
+    else:
+        return JsonResponse({'message': "failed"}) 

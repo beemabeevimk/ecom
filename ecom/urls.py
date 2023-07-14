@@ -25,6 +25,7 @@ urlpatterns = [
     path('',include('accounts.urls')),
     path('',include('adminapp.urls')),
     path('',include('cart.urls')),
+    
     # path('admin_login/', views.admin_login, name='admin_login')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -112,15 +112,18 @@
 
 	                				<table class="table table-summary">
 	                					<tbody>
+						
 	                						<tr class="summary-subtotal">
 	                							<td>Subtotal:</td>
-	                							<td>₹{{ cartitem.subtotal }}</td>
+	                							{% comment %} <span class="sub_total"><td>₹{{ subtotal }}</td>,</span> {% endcomment %}
+												<td class="cart_total" data-id="{{cart_item.id}}" >₹<span class="cart_total_value">{{ total_total }}</span></td>
 	                						</tr><!-- End .summary-subtotal -->
+											
 	                						<tr class="summary-shipping">
 	                							<td>Shipping:</td>
 	                							<td>&nbsp;</td>
 	                						</tr>
-
+											
 	                						<tr class="summary-shipping-row">
 	                							<td>
 													<div class="custom-control custom-radio">
@@ -128,9 +131,9 @@
 														<label class="custom-control-label" for="free-shipping">Free Shipping</label>
 													</div><!-- End .custom-control -->
 	                							</td>
-	                							<td>$0.00</td>
+	                							<td>₹0.00</td>
 	                						</tr><!-- End .summary-shipping-row -->
-
+											
 	                						{% comment %} <tr class="summary-shipping-row">
 	                							<td>
 	                								<div class="custom-control custom-radio">
@@ -158,7 +161,7 @@
 
 	                						<tr class="summary-total">
 	                							<td>Total:</td>
-	                							<td>₹{{ subtotal }}</td>
+	                							<td class="cart_total" data-id="{{cart_item.id}}" >₹<span class="cart_total_value">{{ total_total }}</span></td>
 	                						</tr><!-- End .summary-total -->
 	                					</tbody>
 	                				</table><!-- End .table table-summary -->
@@ -216,10 +219,17 @@
 			  // Update the quantity value in the template
 			  var quantitySpan = $('.value[data-id="' + cartItemId + '"] span');
 			  quantitySpan.text(response.quantity);
+			  console.log(response.quantity)
 
 			  // update total price in template
 			  var totalspan = $('.total[data-id="' + cartItemId + '"] span');
+			  console.log(totalspan	)
 			  totalspan.text(response.subtotal);
+			  console.log(response.subtotal)
+			  var carttotalspan = $('.cart_total');
+			  console.log(carttotalspan)
+			  carttotalspan.text(response.total_total);
+			 			  
 			  
 			}
 		  }

@@ -16,3 +16,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'price')
     fields = ('name', 'description', 'price')
     
+    
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'image','description','status')

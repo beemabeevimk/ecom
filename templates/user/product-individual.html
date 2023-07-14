@@ -22,7 +22,7 @@
 
                         <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
                             {% comment %} <span>Next</span> {% endcomment %}
-                            <i class="icon-angle-right"></i>
+                            <i class="icon-angle-right"></i>  
                         </a>
                     </nav><!-- End .pager-nav -->
                 </div><!-- End .container -->
@@ -37,11 +37,11 @@
                                     <div class="row">
                                         <figure class="product-main-image">
                                             <img id="product-zoom" src="{{ product.product_image.url }}" data-zoom-image="{{ product.product_image.url }}" alt="product image">
-                                            
                                             <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                               <i class="icon-arrows"></i>
                                             </a>
                                           </figure><!-- End .product-main-image -->
+                                          
                                           
 
                                         <div id="product-zoom-gallery" class="product-image-gallery">
@@ -53,12 +53,12 @@
                                                 <img src="{{ product.product_image.url }}" alt="product cross">
                                             </a>
 
-                                            <a class="product-gallery-item" href="#" data-image="assets/images/products/single/centered/3.jpg" data-zoom-image="assets/images/products/single/centered/3-big.jpg">
-                                                <img src="assets/images/products/single/centered/3-small.jpg" alt="product with model">
+                                            <a class="product-gallery-item" href="#" data-image="{{ product.product_image.url }}" data-zoom-image="assets/images/products/single/centered/3-big.jpg">
+                                                <img src="{{ product.product_image.url }}" alt="product with model">
                                             </a>
 
-                                            <a class="product-gallery-item" href="#" data-image="assets/images/products/single/centered/4.jpg" data-zoom-image="assets/images/products/single/centered/4-big.jpg">
-                                                <img src="assets/images/products/single/centered/4-small.jpg" alt="product back">
+                                            <a class="product-gallery-item" href="#" data-image="{{ product.product_image.url }}" data-zoom-image="assets/images/products/single/centered/4-big.jpg">
+                                                <img src="{{ product.product_image.url }}" alt="product back">
                                             </a>
                                         </div><!-- End .product-image-gallery -->
                                     </div><!-- End .row -->
@@ -70,30 +70,30 @@
                                     <h1 class="product-title">{{product.name}}</h1><!-- End .product-title -->
 
                                     <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
-                                    </div><!-- End .rating-container -->
+                                        {% comment %} <div class="ratings"> {% endcomment %}
+                                            {% comment %} <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val --> {% endcomment %}
+                                        {% comment %} </div><!-- End .ratings --> {% endcomment %}
+                                        {% comment %} <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a> {% endcomment %}
+                                    </div><!-- End .rating-container --> 
 
                                     <div class="product-price">
                                         ₹{{product.selling_price}}
                                     </div><!-- End .product-price -->
 
                                     <div class="product-content">
-                                        <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero.</p>
+                                        <p>{{product.description}}</p>
                                     </div><!-- End .product-content -->
 
                                     <div class="details-filter-row details-row-size">
-                                        <label>Color:</label>
+                                        {% comment %} <label>Color:</label> {% endcomment %}
 
-                                        <div class="product-nav product-nav-dots">
+                                        {% comment %} <div class="product-nav product-nav-dots">
                                             <a href="#" class="active" style="background: #cc9966;"><span class="sr-only">Color name</span></a>
                                             <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        </div><!-- End .product-nav -->
+                                        </div><!-- End .product-nav --> {% endcomment %}
                                     </div><!-- End .details-filter-row -->
 
-                                    <div class="details-filter-row details-row-size">
+                                    {% comment %} <div class="details-filter-row details-row-size">
                                         <label for="size">Size:</label>
                                         <div class="select-custom">
                                             <select name="size" id="size" class="form-control">
@@ -103,26 +103,26 @@
                                                 <option value="l">Large</option>
                                                 <option value="xl">Extra Large</option>
                                             </select>
-                                        </div><!-- End .select-custom -->
+                                        </div><!-- End .select-custom --> 
 
                                         <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
-                                    </div><!-- End .details-filter-row -->
+                                    </div><!-- End .details-filter-row --> {% endcomment %}
 
                                     <div class="product-details-action">
                                         <div class="details-action-col">
-                                          <div class="product-details-quantity">
+                                          {% comment %} <div class="product-details-quantity">
                                             <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                                          </div><!-- End .product-details-quantity -->
+                                          </div><!-- End .product-details-quantity --> {% endcomment %}
                                       
-                                          <a href="#" class="btn-product btn-cart" id="add-to-cart-button" onclick="addToCart(event, {% url 'add_to_cart' product.id %})"><span>Add to Cart</span></a>
+                                          <a href="{% url 'add_to_cart' product.id %}" class="btn-product btn-cart" id="add-to-cart-button" onclick="addToCart(event, {% url 'add_to_cart' product.id %})"><span>Add to Cart</span></a>
                                           <span class="added-to-cart-msg hidden" id="added-to-cart-msg">
-                                            <i class="fa fa-check"></i> Added to Cart
+                                            <i class="fa fa-check"></i> 
                                           </span>
                                         </div><!-- End .details-action-col -->
                                       
                                         <div class="details-action-wrapper">
                                           <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
-                                          <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
+                                          {% comment %} <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a> {% endcomment %}
                                         </div><!-- End .details-action-wrapper -->
                                       </div><!-- End .product-details-action -->
                                       
@@ -479,63 +479,18 @@
         </main><!-- End .main -->
 
       
-<script>
-    $(document).ready(function() {
-      // Initialize elevateZoom
-      $('#product-zoom').elevateZoom({
-        zoomType: "inner",
-        cursor: "crosshair"
-      });
-    });
-  </script>
-  <script>
-    $(document).ready(function() {
-      // Function to load image and apply zoom
-      function loadImageAndZoom(imageUrl) {
-        $('#product-zoom').attr('src', imageUrl);
-        $('#product-zoom').data('zoom-image', imageUrl);
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="path/to/elevatezoom.js"></script> <!-- Make sure to include the elevateZoom library -->
         
-        // Reinitialize elevateZoom
-        $('#product-zoom').elevateZoom({
-          zoomType: "inner",
-          cursor: "crosshair"
-        });
-      }
+        <script>
+          $(document).ready(function() {
+            // Initialize elevateZoom
+            $('#product-zoom').elevateZoom({
+              zoomType: "inner",
+              cursor: "crosshair"
+            });
+          });
+        </script>
+        
       
-      // AJAX request
-      $.ajax({
-        url: 'your-ajax-endpoint-url',
-        method: 'GET',
-        success: function(response) {
-          var imageUrl = response.product_image_url;
-          loadImageAndZoom(imageUrl);
-        },
-        error: function(error) {
-          console.error('Error loading image:', error);
-        }
-      });
-    });
-  </script>
-  <script>
-  function addToCart(event, url) {
-    event.preventDefault();
-  
-    $.ajax({
-      url: url,
-      type: 'GET',
-      success: function(response) {
-        // Display the "Added to Cart" message
-        $('#added-to-cart-msg').addClass('visible');
-      },
-      error: function(xhr, status, error) {
-        // Handle error if needed
-        console.log('Error:', error);
-      }
-    });
-  }
-</script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  
-    
-
         {% endblock content %}

@@ -7,6 +7,7 @@ verify = client.verify.services(os.environ['TWILIO_VERIFY_SERVICE_SID'])
 
 
 def send(phone):
+    print(verify)
     verify.verifications.create(to=phone, channel='sms')
 
 

@@ -14,6 +14,8 @@ from django.contrib.auth.decorators import login_required
 from . import verify
 from .forms import UserCreationForm, VerifyForm
 from adminapp.models import Product,Category
+from twilio.rest import Client
+import random   
 
 
 # @login_required
@@ -23,6 +25,7 @@ def home(request):
     # cart = Cart.objects.filter(user=request.user).first()
     # cart_items = Cartitem.objects.filter(cart=cart)
     return render(request,'user/index.html',{'products':products})      
+
 
 
 

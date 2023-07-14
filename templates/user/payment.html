@@ -1,0 +1,223 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<br>
+<br>
+<main class="main">
+    <div class="page-content">
+        <div class="checkout">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="accordion-summary" id="accordion-payment" name="payment_method">
+                            <div class="card">
+                                <div class="card-header" id="heading-1">                                                    
+                                    <h2 class="card-title">
+                                        {% comment %} <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1"> {% endcomment %}
+                                           Pay using Razorpay
+                                        </a>
+                                    </h2>
+                                    <br>
+                                    <a href="" class="btn btn-primary">pay</a>
+                                </div><!-- End .card-header -->
+                                <br>
+                                <div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-payment">
+                                    {% comment %} <div class="card-body">
+                                        Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
+                                    </div><!-- End .card-body --> {% endcomment %}
+                                </div><!-- End .collapse -->
+                            </div><!-- End .card -->
+
+
+                            <div class="card">
+                                <div class="card-header" id="heading-2">
+                                    <h2 class="card-title">
+                                        {% comment %} <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3"> {% endcomment %}
+                                            Cash on delivery
+                                            
+                                        {% comment %} </a> {% endcomment %}
+                                    </h2>
+                                    <br>
+
+
+                                    <a href="{% url 'place_order' id=address.id payment_method='COD'%}" <button class="btn btn-primary"><span>Place Order</span></button></a>
+
+                                    
+                                </div><!-- End .card-header -->
+                                <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
+                                    {% comment %} <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+                                    </div><!-- End .card-body --> {% endcomment %}
+                                </div><!-- End .collapse -->
+                            </div><!-- End .card -->
+
+                            <div class="card">
+                                <div class="card-header" id="heading-5">
+                                    <h2 class="card-title">
+                                        {% comment %} <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-5" aria-expanded="false" aria-controls="collapse-5">
+                                            Credit Card (Stripe)
+                                            <img src="assets/images/payments-summary.png" alt="payments cards">
+                                        </a> {% endcomment %}
+                                    </h2>
+                                </div><!-- End .card-header -->
+                                <div id="collapse-5" class="collapse" aria-labelledby="heading-5" data-parent="#accordion-payment">
+                                    {% comment %} <div class="card-body"> Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit ame.
+                                    </div><!-- End .card-body --> {% endcomment %}
+                                </div><!-- End .collapse -->
+                            </div><!-- End .card -->
+                        </div><!-- End .accordion -->
+                    </div>
+
+
+
+                        <aside class="col-lg-3">
+                            <div class="summary">
+                                <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+
+                                <table class="table table-summary">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for cart_item in cart_items %}
+                                        <tr>
+                                        
+                                            <td><a href="#">{{ cart_item.Product.name }}</a></td>
+                                            <td>₹{{ cart_item.Product.selling_price }}</td>
+                                        
+                                        </tr>
+                                        {% endfor %}
+                                        {% comment %} <tr>
+                                            <td><a href="#">Blue utility pinafore denimdress</a></td>
+                                            <td>$76,00</td>
+                                        </tr> {% endcomment %}
+                                        <tr class="summary-subtotal">
+                                            <td>Subtotal:</td>
+                                            <td>₹{{total_total}}</td>
+                                        </tr><!-- End .summary-subtotal -->
+                                        <tr>
+                                            <td>Shipping:</td>
+                                            <td>Free shipping</td>
+                                        </tr>
+                                        <tr class="summary-total">
+                                            <td>Total:</td>
+                                            <td>₹{{total_total}}</td>
+                                        </tr><!-- End .summary-total -->
+                                    </tbody>
+                                </table><!-- End .table table-summary -->
+
+
+
+
+                                
+
+                                <div class="accordion-summary" id="accordion-payment">
+                                    <div class="card">
+                                        <div class="card-header" id="heading-1">
+                                            <h2 class="card-title">
+                                                <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+                                                    Direct bank transfer
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-payment">
+                                            <div class="card-body">
+                                                Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+
+                                    <div class="card">
+                                        <div class="card-header" id="heading-2">
+                                            <h2 class="card-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
+                                                    Check payments
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-payment">
+                                            <div class="card-body">
+                                                Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. 
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+
+                                    <div class="card">
+                                        <div class="card-header" id="heading-3">
+                                            <h2 class="card-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
+                                                    Cash on delivery
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
+                                            <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+
+                                    <div class="card">
+                                        <div class="card-header" id="heading-4">
+                                            <h2 class="card-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
+                                                    PayPal <small class="float-right paypal-link">What is PayPal?</small>
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-payment">
+                                            <div class="card-body">
+                                                Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+
+                                    <div class="card">
+                                        <div class="card-header" id="heading-5">
+                                            <h2 class="card-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-5" aria-expanded="false" aria-controls="collapse-5">
+                                                    Credit Card (Stripe)
+                                                    <img src="assets/images/payments-summary.png" alt="payments cards">
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="collapse-5" class="collapse" aria-labelledby="heading-5" data-parent="#accordion-payment">
+                                            <div class="card-body"> Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit ame.
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+                                </div><!-- End .accordion -->
+
+                            
+
+
+
+
+                                {% comment %} <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                    <a href="{% url 'place_order' address.id   %}">PROCEED</a>
+                                </button>  {% endcomment %}
+
+                                
+                                {% comment %} <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                    <a href="">
+                                    PROCEED
+                                    </a>
+                                </button> {% endcomment %}
+
+                                
+
+                                {% comment %} <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                    <span class="btn-text">Place Order</span>
+                                    <span class="btn-hover-text">Proceed to Checkout</span>
+                                </button> {% endcomment %}
+                            </div><!-- End .summary -->
+                        </aside><!-- End .col-lg-3 -->
+                </div>
+            </div><!-- End .container -->
+        </div><!-- End .checkout -->
+    </div><!-- End .page-content -->       
+</main>
+{% endblock %}

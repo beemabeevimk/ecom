@@ -11,10 +11,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Molla - Bootstrap eCommerce Template</title>
+      <!-- Include jQuery library -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <meta name="keywords" content="HTML5 Template">
     <meta name="description" content="Molla - Bootstrap eCommerce Template">
     <meta name="author" content="p-themes">
     <!-- Favicon -->
+    <!-- Include CSS for elevateZoom -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.css">
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icons/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icons/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icons/favicon-16x16.png' %}">
@@ -33,6 +38,7 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/demos/demo-18.css' %}">
+
 </head>
 
 <body>
@@ -293,10 +299,11 @@
                                         <li><a href="elements-typography.html">Bluetooth speakers</a></li>
                                         <li><a href="elements-titles.html">Outdoor speakers</a></li>
                                         <li><a href="elements-banners.html">soundbar speakers</a></li>
+                                        <li><a href="elements-accordions.html">Accordions</a></li>
                                         {% comment %} <li><a href="elements-product-category.html">Product Category</a></li>
                                         <li><a href="elements-video-banners.html">Video Banners</a></li>
                                         <li><a href="elements-buttons.html">Buttons</a></li>
-                                        <li><a href="elements-accordions.html">Accordions</a></li>
+                                        
                                         <li><a href="elements-tabs.html">Tabs</a></li>
                                         <li><a href="elements-testimonials.html">Testimonials</a></li>
                                         <li><a href="elements-blog-posts.html">Blog Posts</a></li>
@@ -907,9 +914,11 @@
 <script src="{% static 'js/main.js' %}"></script>
 <script src="{% static 'js/demos/demo-18.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ 
+<script src="{% static 'js/jquery.elevateZoom.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-input-spinner.js' %}"></script>
 </body>
 
 

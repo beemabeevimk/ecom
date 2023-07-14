@@ -37,8 +37,8 @@ class BrandForm(forms.ModelForm):
 
 class ProductForm(forms.ModelForm):
    
-    category = forms.ModelChoiceField(queryset=Category.objects.all() ,widget=forms.Select(attrs={'class':'form-select'}))
-    brand = forms.ModelChoiceField(queryset=Brand.objects.all() ,widget=forms.Select(attrs={'class':'form-select'}))
+    category = forms.ModelChoiceField(queryset=Category.objects.all(),widget=forms.Select(attrs={'class':'form-select'}))
+    brand = forms.ModelChoiceField(queryset=Brand.objects.all(),widget=forms.Select(attrs={'class':'form-select'}))
     name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control' ,'id':'name'}))
     product_image = forms.ImageField(widget=forms.FileInput(attrs={'class':'form-control','id':'formFile',}),required=False)
     quantity = forms.IntegerField(widget=forms.NumberInput(attrs={'class':'form-control','id':'quantity'}))

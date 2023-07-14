@@ -1,0 +1,111 @@
+
+{% load static %}
+
+
+
+
+ <br>
+ <br>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+<div class="container">
+
+
+
+  <div class="row">
+    <div class="col-lg-6">
+      <table class="table table-cart table-mobile">
+        <thead>
+          <tr>
+            <th>  </th>
+          
+            <th>  </th>
+        
+          
+          </tr>
+        </thead>
+
+        <tbody>
+          for i in order.orderProducts.length 
+          
+          <tr>
+            <td class="product-col">
+              <div class="product">
+                <figure class="product-media">
+                  <a href="#">
+                    <img src="upload/<%=order.orderProducts[i].image[0]%>" alt="Product image">
+                  </a>
+                </figure>
+
+                <h3 class="product-title">
+                  <a href="#">order.orderProducts[i].name</a>
+                </h3><!-- End .product-title -->
+              </div><!-- End .product -->
+            </td>
+        
+            <td class="quantity-col">
+              <div class="cart-product-quantity">
+              </div><!-- End .cart-product-quantity -->
+            </td>
+            
+          
+          </tr>
+          <% } %>
+      
+      
+          
+        </tbody>
+      </table><!-- End .table table-wishlist -->
+
+     
+    </div><!-- End .col-lg-9 -->
+
+    <div class="col-lg-6">
+      <h4 class="mt-5">Your Order is on the way</h4>
+      
+   
+      <h2 class="mt-4">Order Details</h2>
+  <p><strong>Order ID:</strong> <%=order._id%></p>
+  <p><strong>Payment Method:</strong> <%=order.paymentmethod%></p>
+  
+    <h2><strong>Amount Paid:</strong>
+    ₹ <%= order.grandtotal.toFixed(2) %></h2>
+  
+ 
+
+      
+      </div>
+  </div><!-- End .row 1 -->
+
+
+
+  <div class="row">
+   
+  </div>
+  
+  <h1 class="mt-5">Payment Confirmation</h1>
+
+  <div class="alert alert-success mt-4">
+    Thank you for your payment! Your transaction has been successfully processed.
+  </div>
+
+  
+
+  <h2 class="mt-4">Shipping Information</h2>
+  <p><strong>Shipping Address:</strong></p>
+  <p><%=order.address.name%></p>
+  <p><%=order.address.street%>,<%=order.address.state%> </p>
+  <p><%=order.address.state%>, <%=order.address.pincode%></p>
+
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+
