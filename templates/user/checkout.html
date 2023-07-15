@@ -214,6 +214,7 @@
 </main><!-- End .main -->
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
     $('#placeOrder').on('click', function () {
         // e.preventDefault();
@@ -242,7 +243,60 @@
         };
 
         if (paymentmethod === "Razor Payment") {
-                    
+            var options = {
+                "key": "rzp_test_E418uENDS8AFgQ", // Enter the Key ID generated from the Dashboard
+                "amount": "{{payment.amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "Beats",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                //"order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response){
+                    const data = {
+                        //cartId: cartId,
+                        address: address,
+                        grandPriceText: grandPriceText,
+                        paymentmethod: paymentmethod,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                     }
+                        console.log("Razorpay")
+                        
+                        $.ajax({
+                            url: '{% url 'order' %}',
+                            method: 'POST',
+                            data: data,
+                            success: function(response) {
+                                console.log("code run success");
+                                console.log(response);
+                                console.log(response.response.order_id);
+                                console.log("code run success");
+                                window.location.href = '{% url 'order_success' %}?order=' + response.response.order_id;
+                            }
+                        });
+                            
+                    //alert(response.razorpay_payment_id);
+                    //alert(response.razorpay_order_id);
+                    //alert(response.razorpay_signature)
+                   
+                },
+                
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response){
+                alert(response.error.code);
+                alert(response.error.description);
+                alert(response.error.source);
+                alert(response.error.step);
+                alert(response.error.reason);
+                alert(response.error.metadata.order_id);
+                alert(response.error.metadata.payment_id);
+            });
+            
+            rzp1.open();
+            
                    console.log("Razor")
         }
         else {
@@ -273,6 +327,42 @@
         })
 
 </script>
+
+	{% comment %} <script>
+		var options = {
+			"key": "rzp_test_E418uENDS8AFgQ", // Enter the Key ID generated from the Dashboard
+			"amount": "{{payment.amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+			"currency": "INR",
+			"name": "Beats",
+			"description": "Test Transaction",
+			"image": "https://example.com/your_logo",
+			//"order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+			"handler": function (response){
+				//alert(response.razorpay_payment_id);
+				//alert(response.razorpay_order_id);
+				//alert(response.razorpay_signature)
+				window.location.href = "{% url 'place_order' id=address.id payment_method='Online' %}";
+			},
+			
+			"theme": {
+				"color": "#3399cc"
+			}
+		};
+		var rzp1 = new Razorpay(options);
+		rzp1.on('payment.failed', function (response){
+				alert(response.error.code);
+				alert(response.error.description);
+				alert(response.error.source);
+				alert(response.error.step);
+				alert(response.error.reason);
+				alert(response.error.metadata.order_id);
+				alert(response.error.metadata.payment_id);
+		});
+		document.getElementById('heading-1').onclick = function(e){
+			rzp1.open();
+			e.preventDefault();
+		}
+		</script> {% endcomment %}
 
     {% endblock content %}
 

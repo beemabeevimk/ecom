@@ -118,6 +118,99 @@ def phone_verify(request):
             return render(request, 'user/phone_verify.html', {'context': context})
     return render(request, 'user/phone_verify.html')
 
+
+
+
+
+
+def forgotPassword(request):
+    global mobile_number_forgotPassword
+    if request.method == 'POST':
+        print("enterd")
+        
+        # setting this mobile number as global variable so i can access it in another view (to verify)
+        mobile_number_forgotPassword = request.POST.get('phone_number')
+        print(mobile_number_forgotPassword)
+        
+        # checking the null case
+        if mobile_number_forgotPassword is '':
+            print("nothappen")
+            # messages.warning(request, 'You must enter a mobile number')
+            return redirect('forgotPassword')
+   
+        # instead we can also do this by savig this mobile number to session and
+        # access it in verify otp:
+        # request.session['mobile']= mobile_number
+        
+        
+        user = CustomUser.objects.filter(phone_number = '+91'+  str(mobile_number_forgotPassword))
+        print(user)
+            
+        if user:  #if user exists
+            verify.send('+91' + str(mobile_number_forgotPassword))
+            return redirect('forgot_Password_otp')
+        else:
+            messages.warning(request,'Mobile number doesnt exist')
+            return redirect('forgot_Password')
+            
+    return render(request, 'user/phone_verify.html')
+
+
+
+def forgotPassword_otp(request):
+    mobile_number = mobile_number_forgotPassword
+    print(mobile_number)
+    
+    if request.method == 'POST':
+          
+        form = VerifyForm(request.POST)
+        if form.is_valid():
+             otp  = form.cleaned_data.get('code')
+        if verify.check('+91'+ str(mobile_number), otp):
+            user = CustomUser.objects.get(phone_number='+91'+  str(mobile_number))
+            if user:
+                return redirect('resetPassword')
+        else:
+            # messages.warning(request,'Invalid OTP')
+            return redirect('forgot_Password_otp')
+    else:
+        form = VerifyForm()
+
+        
+    return render(request, 'user/verify.html', {'form': form})
+
+
+
+
+def resetPassword(request):
+    mobile_number = mobile_number_forgotPassword
+    
+    if request.method == 'POST':
+        password1 = request.POST.get('password')
+        password2 = request.POST.get('confirm_password')
+        print(str(password1)+' '+str(password2)) #checking
+        
+        if password1 == password2:
+            user = CustomUser.objects.get(phone_number='+91'+ str(mobile_number))
+            print(user)
+            print('old password  : ' +str(user.password))
+            
+            user.set_password(password1)
+            user.save()
+
+            print('new password  : ' +str(user.password))
+            # messages.success(request, 'Password changed successfully')
+            return redirect('user_login')
+        else:
+            # messages.warning(request, 'Passwords doesnot match, Please try again')
+            return redirect('resetPassword')
+    
+    return render(request, 'user/resetpassword.html')
+
+
+
+
+
 def username_password(phone):
     user = CustomUser.objects.filter(phone_number=phone).first()
     return user

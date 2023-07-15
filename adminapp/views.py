@@ -271,3 +271,6 @@ def product_individual(request, id):
     return render(request,'user/product-individual.html',{'product':product})
 
 
+
+def page_orders(request):
+    return render(request,'admin-templates/page-orders.html')

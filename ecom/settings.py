@@ -148,4 +148,5 @@ LOGIN_URL = '/login/'
 # APPEND_SLASH = False
 
 
-
+KEY="rzp_test_E418uENDS8AFgQ"
+SECRET = "AzXCm0cxY33JcZB1t0QIHY0f"

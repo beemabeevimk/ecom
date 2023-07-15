@@ -22,6 +22,7 @@ path('order_success',views.order_success,name='order_success'),
 path('remove_cart/<int:id>/',views.remove_cart,name='remove_cart'),
 
  path('order',views.order,name='order'),
-
+ 
+ path('orderpage',views.orderpage,name="orderpage"),
 
 ]

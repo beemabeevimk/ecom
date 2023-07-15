@@ -35,5 +35,7 @@ urlpatterns = [
 
     path('product_individual/<int:id>',views.product_individual,name="product_individual"),
     
+    path('page_orders',views.page_orders,name="page_orders"),
+    
 ]
 

@@ -28,5 +28,8 @@ urlpatterns = [
     path('verify_code/', views.verify_code, name="verify_code"),
     path('wireless_earbuds',views.wireless_earbuds,name='wireless_earbuds'),
     path('change_pass',views.change_pass,name='change_pass'),
+    path('forgotPassword',views.forgotPassword,name='forgot_Password'),
+    path('forgotPassword_otp',views.forgotPassword_otp,name='forgot_Password_otp'),
+    path('resetPassword',views.resetPassword,name='resetPassword'),
 ]
 
