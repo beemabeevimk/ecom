@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import get_user_model
-from accounts.models import CustomUser
+from accounts.models import Address, CustomUser
 from django.contrib.auth import authenticate,login as auth_login,logout
 
 from adminapp.models import Product,Category
@@ -252,3 +252,15 @@ def new_pass(request):
     return render('change-pass.html')
 
 
+def user_profile(request):
+    user = request.user
+    address = Address.objects.filter(user=user)
+    return render(request,'user/dashboard.html',{'user':user,'address':address})
+
+def edit_profile(request):
+    return render(request,'user/edit-profile.html')
+
+
+def address_on_profile(request):
+  
+    return render(request,'user/address-profile.html')

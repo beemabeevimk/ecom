@@ -309,6 +309,9 @@
                             csrfmiddlewaretoken: '{{ csrf_token }}'
                          }
                             console.log("cod worked")
+                            console.log(address)
+                            console.log(paymentmethod)
+                            console.log(grandPriceText)
                             
                             $.ajax({
                                 url: '{% url 'order' %}',

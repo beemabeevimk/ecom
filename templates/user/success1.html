@@ -1,5 +1,6 @@
-
+{% extends 'user/base.html' %}
 {% load static %}
+{% block content %}
 
 
 
@@ -10,7 +11,9 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-
+<br>
+<br>
+<br>
 <div class="container">
 
 
@@ -32,28 +35,32 @@
          
           
           <tr>
+            {% for product in ordered_products %}
             <td class="product-col">
               <div class="product">
                 <figure class="product-media">
-                  <a href="#">
-                    <img src="upload/<%=order.orderProducts[i].image[0]%>" alt="Product image">
+                  <a href="{% url 'product_individual' product.id %}">
+                    <img src="{{ product.product.product_image.url }}" alt="Product image">
                   </a>
                 </figure>
 
                 <h3 class="product-title">
-                  <a href="#">order.orderProducts[i].name</a>
+                  <a href="{% url 'product_individual' product.id%}">{{ product.product.name }}</a>
                 </h3><!-- End .product-title -->
               </div><!-- End .product -->
             </td>
         
             <td class="quantity-col">
               <div class="cart-product-quantity">
+                {{ product.quantity }}
               </div><!-- End .cart-product-quantity -->
             </td>
+
+            {% endfor %}
             
           
           </tr>
-          <% } %>
+          
       
       
           
@@ -68,11 +75,11 @@
       
    
       <h2 class="mt-4">Order Details</h2>
-  <p><strong>Order ID:</strong> <%=order._id%></p>
-  <p><strong>Payment Method:</strong> <%=order.paymentmethod%></p>
+  <p><strong>Order ID:</strong>{{order_id}}</p>
+  <p><strong>Payment Method:</strong> {{payment}}</p>
   
-    <h2><strong>Amount Paid:</strong>
-    ₹ <%= order.grandtotal.toFixed(2) %></h2>
+    {% comment %} <h2><strong>Amount Paid:</strong>
+    ₹ {{product_price}} </h2> {% endcomment %}
   
  
 
@@ -96,9 +103,9 @@
 
   <h2 class="mt-4">Shipping Information</h2>
   <p><strong>Shipping Address:</strong></p>
-  <p><%=order.address.name%></p>
-  <p><%=order.address.street%>,<%=order.address.state%> </p>
-  <p><%=order.address.state%>, <%=order.address.pincode%></p>
+  <p>{{address.name}}</p>
+  <p>{{address.address}},{{address.city}} </p>
+  <p>{{address.state}}, {{address.pincode}}</p>
 
 
 </div>
@@ -106,6 +113,6 @@
 <!-- Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
+{% endblock content %}
 
 

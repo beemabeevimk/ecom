@@ -342,7 +342,7 @@
                         </div><!-- End .header-search -->
 
                         {% if request.user.is_authenticated %}
-                        <a><span class="flaticon-user"></span></a> {{ user.name }}
+                        <a href="/user_profile"><span class="flaticon-user"></span>{{ user.name }}</a>
                         <a href="/user_logout" class="wishlist-link">
                             <p>LOGOUT</p>
                         </a>

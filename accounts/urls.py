@@ -31,5 +31,9 @@ urlpatterns = [
     path('forgotPassword',views.forgotPassword,name='forgot_Password'),
     path('forgotPassword_otp',views.forgotPassword_otp,name='forgot_Password_otp'),
     path('resetPassword',views.resetPassword,name='resetPassword'),
+    
+    path('user_profile',views.user_profile,name='user_profile'),
+    path('edit_profile',views.edit_profile,name="edit_profile"),
+    path('address_on_profile',views.address_on_profile,name="address_on_profile"),
 ]
 

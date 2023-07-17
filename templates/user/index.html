@@ -50,8 +50,8 @@
 
                 {% comment %} <span class="slider-loader"></span><!-- End .slider-loader --> {% endcomment %}
             {% comment %} </div><!-- End .intro-slider-container --> {% endcomment %}
-            SHOP NOW 
-            <div class="pt-2 pb-2">
+           
+            {% comment %} <div class="pt-2 pb-2">
                 <div class="container brands">
                     <div class="banner-group">
                         <div class="row">
@@ -153,7 +153,7 @@
                         </a>
                     </div><!-- End .owl-carousel -->
                 </div><!-- End .container -->
-            </div><!-- End .bg-lighter -->
+            </div><!-- End .bg-lighter --> {% endcomment %}
 
             <div class="mb-3"></div><!-- End .mb-6 -->
 
@@ -599,19 +599,19 @@
 
             <div class="container recent-arrivals">
                 <div class="heading heading-flex align-items-center mb-3">
-                    <h2 class="title title-lg">Recent Arrivals</h2><!-- End .title -->
+                    {% comment %} <h2 class="title title-lg">Recent Arrivals</h2><!-- End .title --> {% endcomment %}
                     <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="recent-all-link" data-toggle="tab" href="#recent-all-tab" role="tab" aria-controls="recent-all-tab" aria-selected="true">All</a>
+                            {% comment %} <a class="nav-link active" id="recent-all-link" data-toggle="tab" href="#recent-all-tab" role="tab" aria-controls="recent-all-tab" aria-selected="true">All</a> {% endcomment %}
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="recent-women-link" data-toggle="tab" href="#recent-women-tab" role="tab" aria-controls="recent-women-tab" aria-selected="false">Women</a>
+                            {% comment %} <a class="nav-link" id="recent-women-link" data-toggle="tab" href="#recent-women-tab" role="tab" aria-controls="recent-women-tab" aria-selected="false">Women</a> {% endcomment %}
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="recent-men-link" data-toggle="tab" href="#recent-men-tab" role="tab" aria-controls="recent-men-tab" aria-selected="false">Men</a>
+                            {% comment %} <a class="nav-link" id="recent-men-link" data-toggle="tab" href="#recent-men-tab" role="tab" aria-controls="recent-men-tab" aria-selected="false">Men</a> {% endcomment %}
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="recent-shoes-link" data-toggle="tab" href="#recent-shoes-tab" role="tab" aria-controls="recent-shoes-tab" aria-selected="false">Shoes & Boots</a>
+                            {% comment %} <a class="nav-link" id="recent-shoes-link" data-toggle="tab" href="#recent-shoes-tab" role="tab" aria-controls="recent-shoes-tab" aria-selected="false">Shoes & Boots</a> {% endcomment %}
                         </li>
                     </ul>
                 </div><!-- End .heading -->
@@ -626,7 +626,7 @@
                                     <div class="product product-2 text-center">
                                        
                                         <figure class="product-media">
-                                            <span class="product-label label-sale">Sale</span>
+                                            {% comment %} <span class="product-label label-sale">Sale</span> {% endcomment %}
                                             <a href="{% url 'product_individual' product.id %}">
                                                 <img src="{{ product.product_image.url }}" alt="Product image" class="product-image">
                                                 <img src="{{ product.product_image.url }}" alt="Product image" class="product-image-hover">
@@ -657,7 +657,7 @@
                                 </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
                                 {% endfor %} 
 
-                                <div class="col-6 col-md-4 col-lg-3">
+                                {% comment %} <div class="col-6 col-md-4 col-lg-3">
                                     <div class="product product-2 text-center">
                                         <figure class="product-media">
                                             <a href="product.html">
@@ -684,9 +684,9 @@
                                             </div><!-- End .product-price -->
                                         </div><!-- End .product-body -->
                                     </div><!-- End .product -->
-                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 --> {% endcomment %}
 
-                                <div class="col-6 col-md-4 col-lg-3">
+                                {% comment %} <div class="col-6 col-md-4 col-lg-3">
                                     <div class="product product-2 text-center">
                                         <figure class="product-media">
                                             <a href="product.html">
@@ -722,9 +722,9 @@
                                             </div><!-- End .product-nav -->
                                         </div><!-- End .product-body -->
                                     </div><!-- End .product -->
-                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 --> {% endcomment %}
 
-                                <div class="col-6 col-md-4 col-lg-3">
+                                {% comment %} <div class="col-6 col-md-4 col-lg-3">
                                     <div class="product product-2 text-center">
                                         <figure class="product-media">
                                             <a href="product.html">
@@ -751,9 +751,9 @@
                                             </div><!-- End .product-price -->
                                         </div><!-- End .product-body -->
                                     </div><!-- End .product -->
-                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 --> {% endcomment %}
 
-                                <div class="col-6 col-md-4 col-lg-3">
+                                {% comment %} <div class="col-6 col-md-4 col-lg-3">
                                     <div class="product product-2 text-center">
                                         <figure class="product-media">
                                             <a href="product.html">
@@ -780,9 +780,9 @@
                                             </div><!-- End .product-price -->
                                         </div><!-- End .product-body -->
                                     </div><!-- End .product -->
-                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 --> {% endcomment %}
 
-                                <div class="col-6 col-md-4 col-lg-3">
+                                {% comment %} <div class="col-6 col-md-4 col-lg-3">
                                     <div class="product product-2 text-center">
                                         <figure class="product-media">
                                             <a href="product.html">
@@ -818,9 +818,9 @@
                                             </div><!-- End .product-nav -->
                                         </div><!-- End .product-body -->
                                     </div><!-- End .product -->
-                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 --> {% endcomment %}
 
-                                <div class="col-6 col-md-4 col-lg-3">
+                                {% comment %} <div class="col-6 col-md-4 col-lg-3">
                                     <div class="product product-2 text-center">
                                         <figure class="product-media">
                                             <a href="product.html">
@@ -847,9 +847,9 @@
                                             </div><!-- End .product-price -->
                                         </div><!-- End .product-body -->
                                     </div><!-- End .product -->
-                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 --> {% endcomment %}
 
-                                <div class="col-6 col-md-4 col-lg-3">
+                                {% comment %} <div class="col-6 col-md-4 col-lg-3">
                                     <div class="product product-2 text-center">
                                         <figure class="product-media">
                                             <span class="product-label label-sale">sale</span>
@@ -878,7 +878,7 @@
                                             </div><!-- End .product-price -->
                                         </div><!-- End .product-body -->
                                     </div><!-- End .product -->
-                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 --> {% endcomment %}
                             </div><!-- End .row -->
                         </div><!-- End .products -->
                     </div><!-- .End .tab-pane -->

@@ -227,7 +227,7 @@ def order_success(request):
     print("#1")
     order_id = request.GET.get('order')
     print("#2")
-                        
+    ordered_products = OrderProduct.objects.filter(id=order_id)             
     # order = get_object_or_404(Orders, id=order_id)
     order = OrderProduct.objects.get(id=order_id)
     print(order)
@@ -237,7 +237,7 @@ def order_success(request):
     product_dict = model_to_dict(product)
     print("#4")      
     # Access the fields from the related Product model
-    product_image = product_dict['product_image']
+    product_image = product_dict['product_image'].url
     selling_price = product_dict['selling_price']
     print("#5") 
     # Retrieve other fields from the OrderProduct model
@@ -261,7 +261,8 @@ def order_success(request):
         'status':status,
         'product':product,
         'payment':payment,
-        'image_url':product_image
+        'image_url':product_image,
+        'ordered_products': ordered_products,
     }  
          
     print("#7")                                    
@@ -294,7 +295,6 @@ def order(request):
             ordered = False,
             status = "New",
             quantity = False,
-          
         )
         print("4")
         order.save()
@@ -310,7 +310,7 @@ def order(request):
                 is_paid=False,
                 payment=payment,
                 user=request.user,
-                address=address,
+                address=address_details,
             )
              print("6")
              product=cart_item.Product
@@ -320,7 +320,7 @@ def order(request):
              print("8") 
              
              
-        #cart_items.delete()
+        cart_items.delete()
                    
         response_data = {'order_id': ordered_product.id}
         print("9")
@@ -335,4 +335,13 @@ def order(request):
 
 def orderpage(request):
     orders = Orders.objects.all().order_by("-created_at")
-    return render(request, "admintemplates/order.html", {"orders": orders})
+    print(orders)
+    return render(request, "admin-templates/page-orders.html", {"orders": orders})
+
+
+
+def order_detail(request):
+    orders = OrderProduct.objects.all()
+    print(orders)
+    return render(request,'admin-templates/orders-detail.html',{"orders": orders})
+
