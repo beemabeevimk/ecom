@@ -13,7 +13,7 @@
                         
                         {{ form }}
                         {% if form.error.category %}
-                        <label  class="text-danger">{{ forms.errors.category }}</label>
+                        <label  class="text-danger">{{ forms.errors.category.name }}</label>
                         {% endif %}
 
                     </div>
@@ -22,16 +22,16 @@
                         
                         {{ form.brand }}
                         {% if form.errors.brand %}
-                        <label  class="text-danger">{{ forms.errors.brand }}</label>
+                        <label  class="text-danger">{{ forms.errors.brand.name }}</label>
                         {% endif %}
 
                     </div>
                     <div class="mb-3">
-                        <label  class="form-label">Offer</label>
+                        {% comment %} <label  class="form-label">Offer</label> {% endcomment %}
                         
                         {{ form.offer }}
                         {% if form.errors.offer %}
-                        <label  class="text-danger">{{ form.errors.offer }}</label>
+                        {% comment %} <label  class="text-danger">{{ form.errors.offer }}</label> {% endcomment %}
                         {% endif %}
 
                     </div>

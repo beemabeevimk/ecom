@@ -45,21 +45,18 @@
                                           
 
                                         <div id="product-zoom-gallery" class="product-image-gallery">
-                                            <a class="product-gallery-item active" href="#" data-image="{{ product.product_image.url }}" data-zoom-image="assets/images/products/single/centered/1-big.jpg">
-                                                <img src="{{ product.product_image.url }}" alt="product side">
-                                            </a>
+                                            
+                                            {% for image in images %}
 
-                                            <a class="product-gallery-item" href="#" data-image="{{ product.product_image.url }}" data-zoom-image="assets/images/products/single/centered/2-big.jpg">
-                                                <img src="{{ product.product_image.url }}" alt="product cross">
-                                            </a>
+                                                <a class="product-gallery-item" href="#" data-image="{{ product.product_image.url }}" data-zoom-image="assets/images/products/single/centered/2-big.jpg">
+                                                    <img src="{{ image.image.url }}" alt="product cross">
+                                                </a>
+                                            
+                                            {% endfor %}
+                                            
 
-                                            <a class="product-gallery-item" href="#" data-image="{{ product.product_image.url }}" data-zoom-image="assets/images/products/single/centered/3-big.jpg">
-                                                <img src="{{ product.product_image.url }}" alt="product with model">
-                                            </a>
-
-                                            <a class="product-gallery-item" href="#" data-image="{{ product.product_image.url }}" data-zoom-image="assets/images/products/single/centered/4-big.jpg">
-                                                <img src="{{ product.product_image.url }}" alt="product back">
-                                            </a>
+                                            
+                                            
                                         </div><!-- End .product-image-gallery -->
                                     </div><!-- End .row -->
                                 </div><!-- End .product-gallery -->

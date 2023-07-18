@@ -115,19 +115,20 @@ ImageFormSet = ProductImageFormSet = inlineformset_factory(Product, Picture, for
 @never_cache
 @login_required(login_url='admin_login')
 def add_product(request):
-    
+    print("add product")
     if request.method == 'POST':   
         form = ProductForm(request.POST, request.FILES)
         images = request.FILES.getlist('product_image')
-
+        print(images)
         if form.is_valid():
-            
+            print("form valied")
             try:
                 # update product table
                 product = form.save()
-                
+                print("form saved")
                 # update picture table
-                for img in images:
+                for img in images: 
+                    print(img)
                     new_image = Picture(product = product, image = img)
                     new_image.save()
             except Exception as e:
@@ -267,8 +268,10 @@ def unblock_user(request, id):
 @login_required
 def product_individual(request, id):
     product = Product.objects.get(pk=id)
+    images = Picture.objects.filter(product_id = id)
+    
     # categories = Category.objects.get(pk=id)
-    return render(request,'user/product-individual.html',{'product':product})
+    return render(request,'user/product-individual.html',{'product':product, 'images':images})
 
 
 

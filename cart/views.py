@@ -132,18 +132,14 @@ class CheckoutView(View):
         subtotal=calculate_total(request)
         address = Address.objects.filter(user=request.user)
         # print(address)
-        client = razorpay.Client(auth=(settings.KEY, settings.SECRET))
-    # data = { "amount": total_price, "currency": "INR", "receipt": "order_rcptid_11" }
-        print(subtotal)
-        payment = client.order.create({ "amount": subtotal*100, "currency": "INR", "receipt": "order_rcptid_11" })
-      
+        
         context = {
             'cart_items': cart_items,
             # 'subtotal':subtotal['total'],
             'address': address,
             "total_total":subtotal,
              'cart':cart.cart_id,
-             'payment':payment,
+             
         }
 
         return render(request, 'user/checkout.html',context) 
@@ -224,22 +220,20 @@ class DeleteAddressView(View):
 
 
 def order_success(request):
-    print("#1")
-    order_id = request.GET.get('order')
-    print("#2")
-    ordered_products = OrderProduct.objects.filter(id=order_id)             
+    order_id = request.GET.get('order_id')
+  
+    orders1 = request.GET.get('orders')
+    print(orders1)
+    ordered_products = OrderProduct.objects.filter(order_id=orders1)  
+    orders = Orders.objects.filter()           
     # order = get_object_or_404(Orders, id=order_id)
     order = OrderProduct.objects.get(id=order_id)
     print(order)
-    print("#3")      
     product = order.product
-    print(product)
-    product_dict = model_to_dict(product)
-    print("#4")      
+    product_dict = model_to_dict(product)    
     # Access the fields from the related Product model
     product_image = product_dict['product_image'].url
     selling_price = product_dict['selling_price']
-    print("#5") 
     # Retrieve other fields from the OrderProduct model
     user = order.user
     address = order.address
@@ -247,8 +241,7 @@ def order_success(request):
     is_paid = order.is_paid
     status = order.status
     quantity = order.quantity
-    payment = order.payment
-    print("#6")        
+    payment = order.payment      
     context = {
         'order_id': order_id,
         'quantity': quantity,
@@ -263,72 +256,119 @@ def order_success(request):
         'payment':payment,
         'image_url':product_image,
         'ordered_products': ordered_products,
-    }  
-         
-    print("#7")                                    
+    }                                    
     return render(request,'user/success1.html',context)
     
     
 
 #ajax method to create order
 def order(request):
-    print("1")
     if request.method == 'POST':
-        cart_items = Cartitem.objects.filter(user=request.user) 
-        address = request.POST.get('address')
-        print("2")
-        address_details = Address.objects.get(id=address)
-        print("3")
-        print(address_details)
-        # payment_method = request.POST.get('payment_method')
-        payment = Payment.objects.create(
-            user=request.user,
-            payment_method=request.POST.get('paymentmethod'),
-            amount=request.POST.get('grandPriceText'),
-        )
-        payment.save()
+        payment_method = request.POST.get('paymentmethod')
         
-        order = Orders.objects.create(
-            user = request.user,
-            payment = payment,
-            address = address_details,
-            ordered = False,
-            status = "New",
-            quantity = False,
-        )
-        print("4")
-        order.save()
-        print(order)
-        print("5")
-        for cart_item in cart_items:
-             ordered_product = OrderProduct.objects.create(
-                order = order,
-                product=cart_item.Product,
-                quantity=cart_item.quantity,
-                product_price=cart_item.Product.selling_price,
-                ordered=False,
-                is_paid=False,
-                payment=payment,
-                user=request.user,
-                address=address_details,
-            )
-             print("6")
-             product=cart_item.Product
-             product.quantity -= cart_item.quantity
-             print("7")
-             product.save()
-             print("8") 
-             
-             
-        cart_items.delete()
-                   
-        response_data = {'order_id': ordered_product.id}
-        print("9")
-        print(response_data)
+        if payment_method == "Razor Payment":
+            client = razorpay.Client(auth=(settings.KEY, settings.SECRET))
+            amount=request.POST.get('grandPriceText')
+            grand_total = int(amount)
+            
 
-        return JsonResponse({'response':response_data})
+# Print the datatype
+            print(amount)
+            razor_payment = client.order.create({ "amount": grand_total*100, "currency": "INR", "receipt": "order_rcptid_11" })
+            print(razor_payment)
+            print(razor_payment['id'])
+            cart_items = Cartitem.objects.filter(user=request.user)
+            address = request.POST.get('address')
+            address_details = Address.objects.get(id=address)
+
+            payment = Payment.objects.create(
+                user=request.user,
+                payment_method=request.POST.get('paymentmethod'),
+                amount=request.POST.get('grandPriceText'),
+            )
+            payment.save()
+
+            order = Orders.objects.create(
+                user=request.user,
+                payment=payment,
+                address=address_details,
+                ordered=False,
+                status="New",
+                quantity=False,
+            )
+            order.save()
+
+            for cart_item in cart_items:
+                ordered_product = OrderProduct.objects.create(
+                    order=order,
+                    product=cart_item.Product,
+                    quantity=cart_item.quantity,
+                    product_price=cart_item.Product.selling_price,
+                    ordered=False,
+                    is_paid=False,
+                    payment=payment,
+                    user=request.user,
+                    address=address_details,
+                )
+
+                product = cart_item.Product
+                product.quantity -= cart_item.quantity
+                product.save()
+                
+            response_data = {'order_id': ordered_product.id,
+                             'payment_id': razor_payment['id'],
+                             'amount_paid': razor_payment['amount'],
+                             'key': settings.KEY,
+                             'orders_id':order.id
+                             }
+          
+            return JsonResponse({'response': response_data})
+        else:
+            cart_items = Cartitem.objects.filter(user=request.user)
+            address = request.POST.get('address')
+            address_details = Address.objects.get(id=address)
+
+            payment = Payment.objects.create(
+                user=request.user,
+                payment_method=request.POST.get('paymentmethod'),
+                amount=request.POST.get('grandPriceText'),
+            )
+            payment.save()
+
+            order = Orders.objects.create(
+                user=request.user,
+                payment=payment,
+                address=address_details,
+                ordered=False,
+                status="New",
+                quantity=False,
+            )
+            order.save()
+
+            for cart_item in cart_items:
+                ordered_product = OrderProduct.objects.create(
+                    order=order,
+                    product=cart_item.Product,
+                    quantity=cart_item.quantity,
+                    product_price=cart_item.Product.selling_price,
+                    ordered=False,
+                    is_paid=False,
+                    payment=payment,
+                    user=request.user,
+                    address=address_details,
+                )
+
+                product = cart_item.Product
+                product.quantity -= cart_item.quantity
+                product.save()
+
+            response_data = {'order_id': ordered_product.id,
+                             'orders_id':order.id,
+                             }
+            return JsonResponse({'response': response_data})
     else:
-        return JsonResponse({'message': "failed"}) 
+        return JsonResponse({'message': "failed"})
+
     
     
 

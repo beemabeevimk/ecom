@@ -217,165 +217,100 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
     $('#placeOrder').on('click', function () {
-        // e.preventDefault();
-        
         let cartId = $('#placeOrder').val();
-        console.log(cartId)
+        console.log(cartId);
+        
         let address = $('.form-check-input:checked').val();
-        console.log(address)
+        console.log(address);
         
-        let grandPriceText = $('#total_price').text();
-        console.log(grandPriceText)
-
-        // let grandPrice = parseFloat(grandPriceText.replace(/[^\d.]/g, ''));
-        
+        let grandPriceText = $('#total_price').text(); 
+        console.log(grandPriceText);
+    
         let paymentmethod = $('.accordion-summary .card-header .card-title a[aria-expanded="true"]').text().trim();
-        console.log(paymentmethod)
-        
-        //let walletAmount = parseInt($('#wallet-amount').text().trim());
-
-        const data = {
-            //cartId: cartId,
-            address: address,
-            grandPriceText: grandPriceText,
-            paymentmethod: paymentmethod
+        console.log(paymentmethod);
+    
+        if (paymentmethod === "Razor Payment") {    //razorpay method
+            console.log("Razorpay");
+            const data = {
+                address: address,
+                grandPriceText: grandPriceText,
+                paymentmethod: paymentmethod,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            };
             
-        };
+            $.ajax({
+                url: '{% url 'order' %}',
+                method: 'POST',
+                data: data,
+                success: function(response) {
+                     razorpay(response);
+                }
+            });
 
-        if (paymentmethod === "Razor Payment") {
+        } else {  //cod method
+            const data = {
+                address: address,
+                grandPriceText: grandPriceText,
+                paymentmethod: paymentmethod,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            };
+    
+            $.ajax({
+                url: '{% url 'order' %}',
+                method: 'POST',
+                data: data,
+                success: function(response) {
+                    console.log(response);
+                    console.log("code run success");
+                    console.log(response.response.orders_id);
+                    window.location.href = '{% url 'order_success' %}?order_id=' + response.response.order_id + '&orders=' + response.response.orders_id;
+                    
+                }
+            });
+        }
+     
+
+        //razorpay function
+        function razorpay(Response) {
+            console.log( Response.response.order_id)
+           console.log(Response.response.orders_id)
             var options = {
-                "key": "rzp_test_E418uENDS8AFgQ", // Enter the Key ID generated from the Dashboard
-                "amount": "{{payment.amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "key": Response.response.key, // Enter the Key ID generated from the Dashboard
+                "amount": Response.response.amount_paid * 100, // Amount is in currency subunits. Default currency is INR. Convert the amount accordingly
                 "currency": "INR",
                 "name": "Beats",
-                "description": "Test Transaction",
-                "image": "https://example.com/your_logo",
-                //"order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-                "handler": function (response){
-                    const data = {
-                        //cartId: cartId,
-                        address: address,
-                        grandPriceText: grandPriceText,
-                        paymentmethod: paymentmethod,
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
-                     }
-                        console.log("Razorpay")
-                        
-                        $.ajax({
-                            url: '{% url 'order' %}',
-                            method: 'POST',
-                            data: data,
-                            success: function(response) {
-                                console.log("code run success");
-                                console.log(response);
-                                console.log(response.response.order_id);
-                                console.log("code run success");
-                                window.location.href = '{% url 'order_success' %}?order=' + response.response.order_id;
-                            }
-                        });
-                            
-                    //alert(response.razorpay_payment_id);
-                    //alert(response.razorpay_order_id);
-                    //alert(response.razorpay_signature)
+                "order_id":Response.response.payment_id, // Pass the `id` obtained in the response of the server-side order creation
+                "handler": function(response) {
                    
+                    window.location.href = '{% url 'order_success' %}?order_id=' + Response.response.order_id + '&orders=' + Response.response.orders_id;
+
                 },
-                
                 "theme": {
                     "color": "#3399cc"
                 }
             };
+    
             var rzp1 = new Razorpay(options);
             rzp1.on('payment.failed', function (response){
-                alert(response.error.code);
-                alert(response.error.description);
-                alert(response.error.source);
-                alert(response.error.step);
-                alert(response.error.reason);
-                alert(response.error.metadata.order_id);
-                alert(response.error.metadata.payment_id);
+                // Handle Razorpay failure callback (optional)
+                console.log("Payment failed!");
+                console.log(response.error.code);
+                console.log(response.error.description);
+                console.log(response.error.source);
+                console.log(response.error.step);
+                console.log(response.error.reason);
+                console.log(response.error.metadata.order_id);
+                console.log(response.error.metadata.payment_id);
             });
-            
+    
             rzp1.open();
-            
-                   console.log("Razor")
         }
-        else {
-            
-                        const data = {
-                            //cartId: cartId,
-                            address: address,
-                            grandPriceText: grandPriceText,
-                            paymentmethod: paymentmethod,
-                            csrfmiddlewaretoken: '{{ csrf_token }}'
-                         }
-                            console.log("cod worked")
-                            console.log(address)
-                            console.log(paymentmethod)
-                            console.log(grandPriceText)
-                            
-                            $.ajax({
-                                url: '{% url 'order' %}',
-                                method: 'POST',
-                                data: data,
-                                success: function(response) {
-                                    console.log("code run success");
-                                    console.log(response);
-                                    console.log(response.response.order_id);
-                                    console.log("code run success");
-                                    window.location.href = '{% url 'order_success' %}?order=' + response.response.order_id;
-                                }
-                            });
-                            
-                    }
-        })
+    });
+    
 
 </script>
 
-	{% comment %} <script>
-		var options = {
-			"key": "rzp_test_E418uENDS8AFgQ", // Enter the Key ID generated from the Dashboard
-			"amount": "{{payment.amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-			"currency": "INR",
-			"name": "Beats",
-			"description": "Test Transaction",
-			"image": "https://example.com/your_logo",
-			//"order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-			"handler": function (response){
-				//alert(response.razorpay_payment_id);
-				//alert(response.razorpay_order_id);
-				//alert(response.razorpay_signature)
-				window.location.href = "{% url 'place_order' id=address.id payment_method='Online' %}";
-			},
-			
-			"theme": {
-				"color": "#3399cc"
-			}
-		};
-		var rzp1 = new Razorpay(options);
-		rzp1.on('payment.failed', function (response){
-				alert(response.error.code);
-				alert(response.error.description);
-				alert(response.error.source);
-				alert(response.error.step);
-				alert(response.error.reason);
-				alert(response.error.metadata.order_id);
-				alert(response.error.metadata.payment_id);
-		});
-		document.getElementById('heading-1').onclick = function(e){
-			rzp1.open();
-			e.preventDefault();
-		}
-		</script> {% endcomment %}
-
     {% endblock content %}
 
-    <!-- if (response.message == "ordered successfully") {
-        //const orderid = response.orderdb_Id
-        //console.log(orderid)
-        //const cartid=response.cartid
-        //console.log(cartid)
-        //const productIds=response.productIds
-        window.location.href = '/success?orderid=' + orderid + '&cartid=' + cartid + '&productIds' + productIds
-    }  -->
-
+  
 

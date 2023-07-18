@@ -33,9 +33,9 @@
 
         <tbody>
          
-          
+          {% for product in ordered_products %}
           <tr>
-            {% for product in ordered_products %}
+            
             <td class="product-col">
               <div class="product">
                 <figure class="product-media">
@@ -52,15 +52,15 @@
         
             <td class="quantity-col">
               <div class="cart-product-quantity">
-                {{ product.quantity }}
+                <br>
+                
+                <h2>{{ product.quantity }}</h2>
               </div><!-- End .cart-product-quantity -->
             </td>
-
-            {% endfor %}
             
           
           </tr>
-          
+          {% endfor %}
       
       
           
@@ -76,10 +76,10 @@
    
       <h2 class="mt-4">Order Details</h2>
   <p><strong>Order ID:</strong>{{order_id}}</p>
-  <p><strong>Payment Method:</strong> {{payment}}</p>
+  <p><strong>Payment Method:</strong> {{payment.payment_method}}</p>
   
-    {% comment %} <h2><strong>Amount Paid:</strong>
-    ₹ {{product_price}} </h2> {% endcomment %}
+    <h2><strong>Amount : ₹</strong>
+     {{payment.amount}} </h2> 
   
  
 
@@ -98,15 +98,16 @@
   <div class="alert alert-success mt-4">
     Thank you for your payment! Your transaction has been successfully processed.
   </div>
-
-  
-
+ 
   <h2 class="mt-4">Shipping Information</h2>
+  <br>
   <p><strong>Shipping Address:</strong></p>
+  
   <p>{{address.name}}</p>
   <p>{{address.address}},{{address.city}} </p>
   <p>{{address.state}}, {{address.pincode}}</p>
-
+  <br>
+  <br>
 
 </div>
 

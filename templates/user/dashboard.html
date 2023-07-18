@@ -75,7 +75,7 @@
 								    				<div class="card-body">
 								    					<h3 class="card-title">Billing Address</h3><!-- End .card-title -->
 
-														<p>{{user.name}}<br>
+													
 														{{i.name}}<br>
 														{{i.address}}<br>
 														{{i.city}}{{i.pincode}}<br>
@@ -88,16 +88,18 @@
                                                 {% endfor %}
 								    		</div><!-- End .col-lg-6 -->
 
-								    		{% comment %} <div class="col-lg-6">
+								    		<div class="col-lg-6">
 								    			<div class="card card-dashboard">
 								    				<div class="card-body">
 								    					<h3 class="card-title">Shipping Address</h3><!-- End .card-title -->
 
-														<p>You have not set up this type of address yet.<br>
-														<a href="#">Edit <i class="icon-edit"></i></a></p>
+														{% comment %} <p>You have not set up this type of address yet.<br> {% endcomment %}
+                                                            <a class="nav-link" id="tab-add-link" href="/add_address"
+                                                            >Add New address<i class="icon-edit"></i
+                                                        ></a>
 								    				</div><!-- End .card-body -->
 								    			</div><!-- End .card-dashboard -->
-								    		</div><!-- End .col-lg-6 --> {% endcomment %}
+								    		</div><!-- End .col-lg-6 --> 
 								    	</div><!-- End .row -->
 								    </div><!-- .End .tab-pane -->
 

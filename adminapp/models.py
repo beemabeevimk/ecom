@@ -54,7 +54,7 @@ class Product(models.Model):
         self.slug = slugify(self.name)
         super(Product, self).save(*args, **kwargs)
 
-    def _str_(self):
+    def __str__(self):
         return self.name
     
     
