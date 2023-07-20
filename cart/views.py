@@ -41,7 +41,7 @@ def add_to_cart(request,id):
     #creating cart and cartitem
     cart, _ = Cart.objects.get_or_create(user=user)
     cart_item, item_created = Cartitem.objects.get_or_create( user=user,Product=product,
-                                cart=cart,total=product.selling_price*1)
+     cart=cart,total=product.selling_price*1)
     # Check if the item already exists in the cart for the user 
     if not item_created and product.quantity > 1:
         # If the item already exists, increase its quantity by 1
@@ -380,8 +380,34 @@ def orderpage(request):
 
 
 
-def order_detail(request):
-    orders = OrderProduct.objects.all()
-    print(orders)
-    return render(request,'admin-templates/orders-detail.html',{"orders": orders})
+
+def edit_order(request, id):
+    if request.method == "POST":
+        status = request.POST.get("status")
+        try:
+        
+            order = Orders.objects.get(pk=id)
+            order.status = status
+            order.save()
+            if status == 'Delivered':
+                pyment=order.payment
+                pyment.status='Success'
+                pyment.save()
+
+
+        except Orders.DoesNotExist:
+            pass
+    return redirect("orderpage")
+
+
+
+
+def order_detail(request,id):
+    main_order = Orders.objects.get(pk = id)
+    orders = OrderProduct.objects.filter(order = main_order)
+    return render(request,'admin-templates/orders-detail.html',{"orders": orders,"id":id,"main_order":main_order})
+
+
+
+
 

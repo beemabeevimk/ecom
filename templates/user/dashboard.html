@@ -56,8 +56,88 @@
 								    </div><!-- .End .tab-pane -->
                             
 								<div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
-								    	<p>No order has been made yet.</p>
-								    	<a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
+									<div class="col-md-8 col-lg-9">
+										<div class="tab-content">
+											<div class="tab-pane fade show active" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
+												{% comment %} {% if orders %} {% endcomment %}
+													<table class="table table-wishlist table-mobile" style="width: 800px;">											
+														<thead>
+															<tr>
+																<th>Order number</th>
+																<th>Price</th>
+																<th>Date</th>
+																<th>Status</th>
+																<th>Action</th>
+															</tr>
+														</thead>
+														{% for order in orders %}
+														<tbody>		
+															<tr>
+																{% comment %} <td class="product-col" style="display: flex; align-items: center; justify-content: center;">
+																	<div class="product">
+																		<figure class="product-media">
+																			<a href="">
+																																				
+																				
+																					<img src="{{ order.product_image }}" class="product-image" alt="It" width="50px" />
+																				
+																					<img src="{{ order.product.product_image }}" alt="Default Image" class="product-image" />
+																				                                                                    
+																		</figure>    
+																		
+																	</div>
+																</td> {% endcomment %}
+																<td class="price-col" >  <h3 class="product-title" style="margin-left: 5px;">
+																	<a href="#">{{order.id}}</a>
+																</h3></td>
+																<td class="price-col">₹{{order.payment.amount}}</td>
+																<td class="stock-col">{{order.created_at}}</td>
+																<td class="price-col">
+																	    {% if order.status == 'Delivered' %}
+																		<span class="badge rounded-pill bg-success">{{order.status}}</span>
+																		{% elif order.status == 'New' %}
+																		<span class="badge rounded-pill bg-warning">{{order.status}}</span>
+																		{% elif order.status == 'Pending' %}
+																		<span class="badge rounded-pill bg-danger">{{order.status}}</span>
+																	    {% elif order.status == '' %}
+																		<span class="badge rounded-pill bg-info">product.status</span>
+																		{% endif %}
+																</td> 
+																
+																<td class="action-col">
+																	 {% comment %} <% if(product.status == "Delivered"){ %>	 {% endcomment %}
+																		<a href="#" class="returnorder" data-id="<%=order._id%>" && data-proid="<%=product._id %>"><button class="btn btn-outline-warning return">RETURN</button></a>
+																	{% comment %} <% } else if(product.status == "Completed") { %> {% endcomment %}
+																		<button class="btn btn-info return" disabled>ORDER COMPLETED</button>
+																	{% comment %}<% } else if (product.status == "Cancelled") { %>
+																		<button class="btn btn-info return" disabled>CANCELLED</button>
+																	<% } else if (product.status == "Return Requested") { %>
+																		<button class="btn btn-warning return" disabled>WAITING</button>
+																	<% } else if (product.status == "Shipped") { %>
+																		<button class="btn btn-info return" disabled>CANCEL</button>
+																	<% } else if (product.status == "Returned") { %>
+																		<button class="btn btn-info return" disabled>RETURNED</button>
+																	<% }  else { %>
+																		<a href="#" id="cancelorder" data-id="<%=order._id%>" && data-proid="<%=product._id %>"><button class="btn btn-outline-danger cancel">CANCEL</button></a>
+																	<% } %> {% endcomment %}
+																</td>
+				
+															</tr>													
+														</tbody>
+														{% endfor %}
+														                                         
+													</table>                                        
+												{% comment %} {%  else  %}
+													<p>No order has been made yet.</p>
+												{%  endif  %} {% endcomment %}
+													<a href="/" class="btn btn-outline-primary-2">
+														<span>GO SHOP</span><i class="icon-long-arrow-right"></i>
+													</a>
+												
+											</div><!-- .End .tab-pane -->                                
+										</div>
+									</div><!-- End .col-lg-9 -->
+								    	{% comment %} <a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a> {% endcomment %}
 								    </div><!-- .End .tab-pane -->
 
 								    <div class="tab-pane fade" id="tab-downloads" role="tabpanel" aria-labelledby="tab-downloads-link">

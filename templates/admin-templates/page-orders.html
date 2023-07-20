@@ -43,9 +43,9 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Total</th>
-                                    <th scope="col">Status</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col" class="text-end"> Action </th>
+                                    <th scope="col">Status</th> 
+                                    {% comment %} <th scope="col" class="text-end"> Status </th> {% endcomment %}
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,18 +56,27 @@
                                     <td><b>{{i.user.email}}</b></td>
                                     {% comment %} <td><template class="__cf_email__" data-cfemail="b7dbd2c4dbded2f7d2cfd6dac7dbd299d4d8da">[{{i.user.email}}&#160;protected]</template></td> {% endcomment %}
                                     <td>${{i.payment.amount}}</td>
-                                    <td><span class="badge rounded-pill alert-warning">{{i.status}}</span></td>
+                                    {% comment %} <td><span class="badge rounded-pill alert-warning">{{i.status}}</span></td> {% endcomment %}
                                     <td>{{i.created_at}}</td>
-                                    <td class="text-end">
-                                        <a href="{% url 'order_detail' %}" class="btn btn-md rounded font-sm">Detail</a>
+                                    <td <span class="badge rounded-pill alert-warning"  style="color:> {% if i.status == 'New' %}blue{% elif i.status == 'Delivered' %}green{% elif i.status == 'Pending' %}orange{% elif i.status == 'Cancelled' %}red{% endif %}">{{ i.status }}</span></td>
+                                    <td class="text-end"> 
                                         <div class="dropdown">
-                                            <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
-                                            {% comment %} <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">View detail</a>
-                                                <a class="dropdown-item" href="#">Edit info</a>
-                                                <a class="dropdown-item text-danger" href="#">Delete</a>
-                                            </div> {% endcomment %}
-                                        </div> <!-- dropdown //end -->
+                                            <form method="POST" action="{% url 'edit_order' i.id %}">
+                                                {% csrf_token %}
+                                                <select name="status">
+                                                    <option value="New" class="dropdown-item" {% if i.status == 'New' %}selected{% endif %}>New</option>
+                                                    <option value="Pending" {% if i.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                                    <option value="Confirmed" {% if i.status == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                                                    <option value="out for shipping" {% if i.status == 'out for shipping' %}selected{% endif %}>out for shipping'</option>
+                                                    <option value="Delivered" {% if i.status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                                    <option value="Cancelled" {% if i.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                              
+                                                </select>
+                                                <td><button class="btn btn-md rounded font-sm" type="submit">Change</button></td>
+                                            </form>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'order_detail' i.id %}" class="btn btn-md rounded font-sm">Details</a>
                                     </td>
                                 </tr>
                               {% endfor %} 

@@ -5,19 +5,21 @@
 
         <section class="content-main">
             <div class="content-header">
+               
                 <div>
                     <h2 class="content-title card-title">Order detail</h2>
-                    <p>Details for Order ID: 3453012</p>
+                    <p>Details for Order ID: {{id}}</p>
                 </div>
+              
             </div>
             <div class="card">
                 <header class="card-header">
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
                             <span>
-                                <i class="material-icons md-calendar_today"></i> <b>Wed, Aug 13, 2020, 4:34PM</b>
+                                <i class="material-icons md-calendar_today"></i> <b>{{orders.order.id}}</b>
                             </span> <br>
-                            <small class="text-muted">Order ID: 3453012</small>
+                            <small class="text-muted">Order ID: 3453</small>
                         </div>
                         <div class="col-lg-6 col-md-6 ms-auto text-md-end">
                             <select class="form-select d-inline-block mb-lg-0 mb-15 mw-200">
@@ -70,7 +72,7 @@
                                 <div class="text">
                                     <h6 class="mb-1">Deliver to</h6>
                                     <p class="mb-1">
-                                        City: Tashkent, Uzbekistan <br>Block A, House 123, Floor 2 <br> Po Box 10000
+                                        City: {{main_order.address.name}}, {{main_order.address.address}} <br>{{main_order.address.city}},{{main_order.address.state}},{{main_order.address.pincode}}<br>{{main_order.address.phone}}
                                     </p>
                                     <a href="#">View profile</a>
                                 </div>
@@ -90,58 +92,30 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+
+
+
+                                        {% comment %} product listing for loop start {% endcomment %}
+                                        {% for order in orders %}
                                         <tr>
                                             <td>
                                                 <a class="itemside" href="#">
                                                     <div class="left">
-                                                        <img src="assets/imgs/items/1.jpg" width="40" height="40" class="img-xs" alt="Item">
+                                                        <img src="{{order.product.product_image.url}}" width="40" height="40" class="img-xs" alt="Item">
                                                     </div>
-                                                    <div class="info"> T-shirt blue, XXL size </div>
-                                                </a>
-                                            </td>
-                                            <td> $44.25 </td>
-                                            <td> 2 </td>
-                                            <td class="text-end"> $99.50 </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a class="itemside" href="#">
-                                                    <div class="left">
-                                                        <img src="assets/imgs/items/2.jpg" width="40" height="40" class="img-xs" alt="Item">
-                                                    </div>
-                                                    <div class="info"> Winter jacket for men </div>
-                                                </a>
-                                            </td>
-                                            <td> $7.50 </td>
-                                            <td> 2 </td>
-                                            <td class="text-end"> $15.00 </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a class="itemside" href="#">
-                                                    <div class="left">
-                                                        <img src="assets/imgs/items/3.jpg" width="40" height="40" class="img-xs" alt="Item">
-                                                    </div>
-                                                    <div class="info"> Jeans wear for men </div>
+                                                    <div class="info">{{order.product.name}}</div>
                                                 </a>
                                             </td>
                                             <td> $43.50 </td>
                                             <td> 2 </td>
                                             <td class="text-end"> $102.04 </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <a class="itemside" href="#">
-                                                    <div class="left">
-                                                        <img src="assets/imgs/items/4.jpg" width="40" height="40" class="img-xs" alt="Item">
-                                                    </div>
-                                                    <div class="info"> Product name color and size </div>
-                                                </a>
-                                            </td>
-                                            <td> $99.00 </td>
-                                            <td> 3 </td>
-                                            <td class="text-end"> $297.00 </td>
-                                        </tr>
+                                        {% endfor %}
+                                        {% comment %} product listing for loop end {% endcomment %}
+                                        
+
+
+
                                         <tr>
                                             <td colspan="4">
                                                 <article class="float-end">

@@ -48,12 +48,11 @@
                                             
                                             {% for image in images %}
 
-                                                <a class="product-gallery-item" href="#" data-image="{{ product.product_image.url }}" data-zoom-image="assets/images/products/single/centered/2-big.jpg">
+                                                <a class="product-gallery-item" href="#" data-image="{{ image.image.url }}" data-zoom-image="{{ image.image.url }}">
                                                     <img src="{{ image.image.url }}" alt="product cross">
                                                 </a>
                                             
                                             {% endfor %}
-                                            
 
                                             
                                             

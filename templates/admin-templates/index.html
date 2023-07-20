@@ -72,7 +72,35 @@
                     <div class="card mb-4">
                         <article class="card-body">
                             <h5 class="card-title">Sale statistics</h5>
-                            <canvas id="myChart" height="120px"></canvas>
+                            <canvas id="myChart1" height="120px"></canvas>
+                          
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                
+                          <script>
+                            
+                            const ctx1 = document.getElementById('myChart1');
+                          
+                            new Chart(ctx1, {
+                              type: 'bar',
+                              data: {
+                                labels: {{ monthNumber|safe }},
+                                datasets: [{
+                                  label: 'Total orders by this month',
+                                  data: {{ totalOrders|safe }},
+                                  borderWidth: 1
+                                }]
+                              },
+                              options: {
+                                scales: {
+                                  y: {
+                                    beginAtZero: true
+                                  }
+                                }
+                              }
+                            });
+                          </script>
+
+                            
                         </article>
                     </div>
                     {% comment %} <div class="row">

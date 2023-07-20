@@ -1,3 +1,4 @@
+import calendar
 import queue
 from django.forms import inlineformset_factory
 from django.shortcuts import get_object_or_404, render
@@ -11,6 +12,9 @@ from django.db.models import Q
 from adminapp.forms import BrandForm, CategoryForm, ProductForm, ProductImageForm
 from django.http import HttpResponse
 from adminapp.models import Brand, Category, Picture, Product
+from cart.models import Orders
+from django.db.models import Count
+from django.db.models.functions import ExtractMonth,ExtractYear
 import products
 
 # from .models import Product,Category,Subcategory,ProductVariation
@@ -34,7 +38,56 @@ def admin_login(request):
 
 @login_required(login_url='admin_login')
 def admin_home(request):
-    return render(request, "admin-templates/index.html")
+    delivered_orders = Orders.objects.filter(status='Delivered')
+    delivered_orders_by_months = delivered_orders.annotate(delivered_month=ExtractMonth('created_at')).values('delivered_month').annotate(delivered_count=Count('id')).values('delivered_month', 'delivered_count')
+    print( delivered_orders_by_months)
+    delivered_orders_month = []
+    delivered_orders_number = []
+    for d in delivered_orders_by_months:
+         delivered_orders_month.append(calendar.month_name[d['delivered_month']])
+         delivered_orders_number.append(list(d.values())[1])
+
+
+    
+    
+
+    order_by_months = Orders.objects.annotate(month=ExtractMonth('created_at')).values('month').annotate(count=Count('id')).values('month', 'count')
+    monthNumber = []
+    totalOrders = []
+   
+
+    for o in order_by_months:
+        monthNumber.append(calendar.month_name[o['month']])
+        totalOrders.append(list(o.values())[1])
+        
+    order_by_year = Orders.objects.annotate(year=ExtractYear('created_at')).values('year').annotate(count=Count('id')).values('year', 'count')
+
+    yearNumber = []
+    total_Orders = []
+
+    for o in order_by_year:
+        yearNumber.append(o['year'])
+        total_Orders.append(o['count'])    
+
+    context = {
+        'monthNumber': monthNumber,
+        'totalOrders': totalOrders,
+        'yearNumber': yearNumber,
+        'total_Orders': total_Orders,
+        'delivered_orders':delivered_orders,
+        'order_by_months':order_by_months,
+        
+        'totalOrders':totalOrders,
+        'delivered_orders_number':delivered_orders_number,
+        'delivered_orders_month':delivered_orders_month,
+        'delivered_orders_by_months':delivered_orders_by_months,
+
+    }
+    return render(request, "admin-templates/index.html",context)
+
+
+
+
 
 @never_cache
 def admin_logout(request):

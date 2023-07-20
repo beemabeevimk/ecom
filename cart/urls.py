@@ -24,6 +24,7 @@ path('remove_cart/<int:id>/',views.remove_cart,name='remove_cart'),
 path('order',views.order,name='order'),
  
 path('orderpage',views.orderpage,name="orderpage"),
-path('order_detail',views.order_detail,name="order_detail"),
+path('order_detail/<int:id>/',views.order_detail,name="order_detail"),
+path('edit_order/<int:id>/',views.edit_order,name="edit_order"),
 
 ]

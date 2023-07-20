@@ -8,7 +8,7 @@ from accounts.models import Address, CustomUser
 from django.contrib.auth import authenticate,login as auth_login,logout
 
 from adminapp.models import Product,Category
-from cart.models import Cartitem,Cart
+from cart.models import Cartitem,Cart, Orders
 from .forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from . import verify
@@ -30,18 +30,26 @@ def home(request):
 
 
 def signup(request):
+    print("signup")
     if request.method == "POST":
+        
         name = request.POST.get('name')
         email = request.POST.get('email')
         phone_number='+91'+request.POST.get('phone')
         pass1 = request.POST.get('password')
-        # pass2 = request.POST.get('confirm_password')
-        # try:
-        #    verify.send(phone_number)
-        # except:
-        #     return HttpResponse("phone number is not valid")
-        myuser = CustomUser.objects.create_user(name=name,email=email,password=pass1,phone_number=phone_number)
-        myuser.save()
+        pass2 = request.POST.get('confirmpassword')
+        
+        if pass1 != pass2:
+            return render(request,"user/signup.html",{"error":"password missmach"})
+        
+        try:
+            print("post creatre")
+            myuser = CustomUser.objects.create_user(name=name,email=email,password=pass1,phone_number=phone_number)
+            print("user created")
+        except Exception as e:
+            print("exception found!")
+            return render(request,"user/signup.html",{"error":"email already exist!"})
+        
         return redirect("user_login")
     return render(request,"user/signup.html")
 
@@ -255,12 +263,13 @@ def new_pass(request):
 def user_profile(request):
     user = request.user
     address = Address.objects.filter(user=user)
-    return render(request,'user/dashboard.html',{'user':user,'address':address})
+    orders = Orders.objects.filter(user=request.user).order_by("-created_at")
+    # orders = Orders.objects.all().order_by("-created_at")
+    return render(request,'user/dashboard.html',{'user':user,'address':address,'orders':orders})
 
 def edit_profile(request):
     return render(request,'user/edit-profile.html')
 
 
 def address_on_profile(request):
-  
     return render(request,'user/address-profile.html')

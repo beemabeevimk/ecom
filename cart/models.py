@@ -81,7 +81,7 @@ class Orders(models.Model):
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE, related_name="orders")
     address = models.ForeignKey(Address, on_delete=models.CASCADE,max_length=255)
     ordered = models.BooleanField(default=False)
-    status = models.CharField(max_length=255, choices=STATUS ,default="New")
+    status = models.CharField(max_length=255, choices=STATUS ,default="Pending")
     quantity = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now=True,null=True)
 
@@ -113,7 +113,18 @@ class OrderProduct(models.Model):
 
 
    
+   
+class Coupons(models.Model):
+    code = models.CharField(max_length=50, unique=True)
+    discount = models.DecimalField(max_digits=5, decimal_places=2)
+    valid_from = models.DateTimeField()
+    valid_to = models.DateTimeField()
+    min_amount  = models.IntegerField()
+    active  = models.BooleanField(default=True)
+    created_at  = models.DateTimeField(auto_now_add=True)
 
+    def _str_(self):
+        return self.code
     
     
     
