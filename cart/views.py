@@ -350,7 +350,7 @@ def order(request):
                     order=order,
                     product=cart_item.Product,
                     quantity=cart_item.quantity,
-                    product_price=cart_item.Product.selling_price,
+                    product_price=cart_item.sub_total(),
                     ordered=False,
                     is_paid=False,
                     payment=payment,
@@ -404,10 +404,16 @@ def edit_order(request, id):
 
 def order_detail(request,id):
     main_order = Orders.objects.get(pk = id)
+    print(main_order)
     orders = OrderProduct.objects.filter(order = main_order)
+   
     return render(request,'admin-templates/orders-detail.html',{"orders": orders,"id":id,"main_order":main_order})
 
 
-
+def cancel_order(request,id):
+    order = Orders.objects.get(pk = id)
+    order.status="cancelled"
+    order.save()
+    return redirect('user_profile')
 
 

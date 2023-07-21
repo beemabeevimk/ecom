@@ -39,6 +39,7 @@ def admin_login(request):
 @login_required(login_url='admin_login')
 def admin_home(request):
     delivered_orders = Orders.objects.filter(status='Delivered')
+    print(delivered_orders)
     delivered_orders_by_months = delivered_orders.annotate(delivered_month=ExtractMonth('created_at')).values('delivered_month').annotate(delivered_count=Count('id')).values('delivered_month', 'delivered_count')
     print( delivered_orders_by_months)
     delivered_orders_month = []

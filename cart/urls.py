@@ -26,5 +26,6 @@ path('order',views.order,name='order'),
 path('orderpage',views.orderpage,name="orderpage"),
 path('order_detail/<int:id>/',views.order_detail,name="order_detail"),
 path('edit_order/<int:id>/',views.edit_order,name="edit_order"),
+path('cancel_order/<int:id>/',views.cancel_order,name="cancel_order"),
 
 ]

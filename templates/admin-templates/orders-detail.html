@@ -44,8 +44,9 @@
                                 <div class="text">
                                     <h6 class="mb-1">Customer</h6>
                                     <p class="mb-1">
-                                        John Alexander <br> <template class="__cf_email__" data-cfemail="e2838e879aa2879a838f928e87cc818d8f">[email&#160;protected]</template> <br> +998 99 22123456
+                                        {{main_order.address.name}} <br> <br> {{main_order.address.phone}}<br>{{main_order.address.email}}
                                     </p>
+                                    
                                     <a href="#">View profile</a>
                                 </div>
                             </article>
@@ -104,11 +105,12 @@
                                                         <img src="{{order.product.product_image.url}}" width="40" height="40" class="img-xs" alt="Item">
                                                     </div>
                                                     <div class="info">{{order.product.name}}</div>
+                                                   
                                                 </a>
                                             </td>
-                                            <td> $43.50 </td>
-                                            <td> 2 </td>
-                                            <td class="text-end"> $102.04 </td>
+                                            <td> ₹{{order.product.selling_price}}</td>
+                                            <td> {{order.quantity}} </td>
+                                            <td class="text-end"> ₹{{order.product_price}}</td>
                                         </tr>
                                         {% endfor %}
                                         {% comment %} product listing for loop end {% endcomment %}
@@ -129,7 +131,7 @@
                                                     </dl>
                                                     <dl class="dlist">
                                                         <dt>Grand total:</dt>
-                                                        <dd> <b class="h5">$983.00</b> </dd>
+                                                        <dd> <b class="h5">${{main_order.payment.amount}}</b> </dd>
                                                     </dl>
                                                     <dl class="dlist">
                                                         <dt class="text-muted">Status:</dt>

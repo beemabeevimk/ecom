@@ -91,7 +91,7 @@
 																	<a href="#">{{order.id}}</a>
 																</h3></td>
 																<td class="price-col">₹{{order.payment.amount}}</td>
-																<td class="stock-col">{{order.created_at}}</td>
+																<td class="stock-col">{{order.created_at}} </td>
 																<td class="price-col">
 																	    {% if order.status == 'Delivered' %}
 																		<span class="badge rounded-pill bg-success">{{order.status}}</span>
@@ -99,16 +99,20 @@
 																		<span class="badge rounded-pill bg-warning">{{order.status}}</span>
 																		{% elif order.status == 'Pending' %}
 																		<span class="badge rounded-pill bg-danger">{{order.status}}</span>
-																	    {% elif order.status == '' %}
-																		<span class="badge rounded-pill bg-info">product.status</span>
+																	    {% elif order.status == 'Confirmed' %}
+																		<span class="badge rounded-pill bg-success">{{order.status}}</span>
+																		{% elif order.status == 'cancelled' %}
+																		<span class="badge rounded-pill bg-success">{{order.status}}</span>
+																		
 																		{% endif %}
 																</td> 
 																
 																<td class="action-col">
-																	 {% comment %} <% if(product.status == "Delivered"){ %>	 {% endcomment %}
-																		<a href="#" class="returnorder" data-id="<%=order._id%>" && data-proid="<%=product._id %>"><button class="btn btn-outline-warning return">RETURN</button></a>
-																	{% comment %} <% } else if(product.status == "Completed") { %> {% endcomment %}
-																		<button class="btn btn-info return" disabled>ORDER COMPLETED</button>
+																	 {% if order.status == 'Delivered' %}	
+																		<a href="" class="returnorder" ><button class="btn btn-outline-warning return">RETURN</button></a>
+																	{% else %}
+																	<a href="{% url 'cancel_order' order.id %}" class="returnorder"><button class="btn btn-outline-warning return">CANCEL</button></a>
+																	{% endif %}
 																	{% comment %}<% } else if (product.status == "Cancelled") { %>
 																		<button class="btn btn-info return" disabled>CANCELLED</button>
 																	<% } else if (product.status == "Return Requested") { %>
