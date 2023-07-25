@@ -361,6 +361,7 @@ def order(request):
                 product = cart_item.Product
                 product.quantity -= cart_item.quantity
                 product.save()
+                
 
             response_data = {'order_id': ordered_product.id,
                              'orders_id':order.id,
