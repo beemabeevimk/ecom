@@ -151,3 +151,24 @@ LOGIN_URL = '/login/'
 
 KEY="rzp_test_E418uENDS8AFgQ"
 SECRET = "AzXCm0cxY33JcZB1t0QIHY0f"
+
+
+
+
+# [Unit]
+# Description=gunicorn daemon
+# Requires=gunicorn.socket
+# After=network.target
+
+# [Service]
+# User=ubuntu
+# Group=www-data
+# WorkingDirectory=/home/ubuntu/ecom
+# ExecStart=/home/ubuntu/env/bin/gunicorn \
+#           --access-logfile - \
+#           --workers 3 \
+#           --bind unix:/run/gunicorn.sock \
+#           ecom.wsgi:application
+
+# [Install]
+# WantedBy=multi-user.target
