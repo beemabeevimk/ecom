@@ -172,3 +172,22 @@ SECRET = "AzXCm0cxY33JcZB1t0QIHY0f"
 
 # [Install]
 # WantedBy=multi-user.target
+
+# server {
+#     listen 80;
+#     server_name 13.232.69.12;
+
+#     location = /favicon.ico { access_log off; log_not_found off; }
+#     location /static/ {
+#         root /home/ubuntu/ecom/static/;
+#     }
+    
+#     location /media/ {
+#         root /home/ubuntu/ecom/media/;
+#     }
+
+#     location / {
+#         include proxy_params;
+#         proxy_pass http://unix:/run/gunicorn.sock;
+#     }
+# }

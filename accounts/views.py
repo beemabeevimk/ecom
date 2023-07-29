@@ -141,7 +141,7 @@ def forgotPassword(request):
         print(mobile_number_forgotPassword)
         
         # checking the null case
-        if mobile_number_forgotPassword is '':
+        if mobile_number_forgotPassword == '':
             print("nothappen")
             # messages.warning(request, 'You must enter a mobile number')
             return redirect('forgotPassword')

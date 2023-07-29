@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Molla - Bootstrap eCommerce Template</title>
+    <title>Audiofy</title>
       <!-- Include jQuery library -->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
@@ -21,11 +21,11 @@
     <!-- Include CSS for elevateZoom -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.css">
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icons/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icons/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icons/favicon-16x16.png' %}">
+    {% comment %} <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icons/favicon-32x32.png' %}"> {% endcomment %}
+    {% comment %} <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icons/favicon-16x16.png' %}"> {% endcomment %}
     <link rel="manifest" href="{% static 'images/icons/site.html' %}">
     <link rel="mask-icon" href="{% static 'images/icons/safari-pinned-tab.svg' %}" color="#666666">   
-    <link rel="shortcut icon" href="{% static 'images/icons/favicon.ico' %}">
+    {% comment %} <link rel="shortcut icon" href="{% static 'images/icons/favicon.ico' %}"> {% endcomment %}
     <meta name="apple-mobile-web-app-title" content="Molla">
     <meta name="application-name" content="Molla">
     <meta name="msapplication-TileColor" content="#cc9966">
@@ -603,7 +603,7 @@
                 <li class="active">
                     <a href="index.html">Home</a>
 
-                    <ul>
+                    {% comment %} <ul>
                         <li><a href="index-1.html">01 - furniture store</a></li>
                         <li><a href="index-2.html">02 - furniture store</a></li>
                         <li><a href="index-3.html">03 - electronic store</a></li>
@@ -628,11 +628,11 @@
                         <li><a href="index-22.html">22 - tools store</a></li>
                         <li><a href="index-23.html">23 - fashion left navigation store</a></li>
                         <li><a href="index-24.html">24 - extreme sport store</a></li>
-                    </ul>
+                    </ul> {% endcomment %}
                 </li>
                 <li>
                     <a href="category.html">Shop</a>
-                    <ul>
+                    {% comment %} <ul>
                         <li><a href="category-list.html">Shop List</a></li>
                         <li><a href="category-2cols.html">Shop Grid 2 Columns</a></li>
                         <li><a href="category.html">Shop Grid 3 Columns</a></li>
@@ -645,11 +645,11 @@
                         <li><a href="checkout.html">Checkout</a></li>
                         <li><a href="wishlist.html">Wishlist</a></li>
                         <li><a href="#">Lookbook</a></li>
-                    </ul>
+                    </ul> {% endcomment %}
                 </li>
                 <li>
                     <a href="product.html" class="sf-with-ul">Product</a>
-                    <ul>
+                    {% comment %} <ul>
                         <li><a href="product.html">Default</a></li>
                         <li><a href="product-centered.html">Centered</a></li>
                         <li><a href="product-extended.html"><span>Extended Info<span class="tip tip-new">New</span></span></a></li>
@@ -658,11 +658,11 @@
                         <li><a href="product-sidebar.html">Boxed With Sidebar</a></li>
                         <li><a href="product-fullwidth.html">Full Width</a></li>
                         <li><a href="product-masonry.html">Masonry Sticky Info</a></li>
-                    </ul>
+                    </ul> {% endcomment %}
                 </li>
                 <li>
                     <a href="#">Pages</a>
-                    <ul>
+                    {% comment %} <ul>
                         <li>
                             <a href="about.html">About</a>
 
@@ -683,9 +683,9 @@
                         <li><a href="faq.html">FAQs</a></li>
                         <li><a href="404.html">Error 404</a></li>
                         <li><a href="coming-soon.html">Coming Soon</a></li>
-                    </ul>
+                    </ul> {% endcomment %}
                 </li>
-                <li>
+                {% comment %} <li>
                     <a href="blog.html">Blog</a>
 
                     <ul>
@@ -725,10 +725,10 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
+                </li> {% endcomment %}
                 <li>
                     <a href="elements-list.html">Elements</a>
-                    <ul>
+                    {% comment %} <ul>
                         <li><a href="elements-products.html">Products</a></li>
                         <li><a href="elements-typography.html">Typography</a></li>
                         <li><a href="elements-titles.html">Titles</a></li>
@@ -743,7 +743,7 @@
                         <li><a href="elements-portfolio.html">Portfolio</a></li>
                         <li><a href="elements-cta.html">Call to Action</a></li>
                         <li><a href="elements-icon-boxes.html">Icon Boxes</a></li>
-                    </ul>
+                    </ul> {% endcomment %}
                 </li>
             </ul>
         </nav><!-- End .mobile-nav -->
